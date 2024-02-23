@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { Button } from '~/components/ui/button'
@@ -49,6 +50,9 @@ export function SignIn() {
           </Button>
         </form>
       </section>
+      <Button asChild className="absolute right-4 top-4" size="sm" variant="ghost">
+        <Link to="/sign-up">Fazer cadastro</Link>
+      </Button>
     </>
   )
 }
