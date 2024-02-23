@@ -12,7 +12,7 @@ import { sleep } from '~/lib/utils'
 import type { SignInType } from '~/schemas/sign-in'
 import { signInSchema } from '~/schemas/sign-in'
 
-export function SignIn() {
+export const SignIn = () => {
   const {
     register,
     handleSubmit,

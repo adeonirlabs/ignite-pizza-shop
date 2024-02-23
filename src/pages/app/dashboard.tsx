@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-export function Dashboard() {
+export const Dashboard = () => {
   return (
     <>
       <Helmet title="Dashboard" />

@@ -12,7 +12,7 @@ import { sleep } from '~/lib/utils'
 import type { SignUpType } from '~/schemas/sign-up'
 import { signUpSchema } from '~/schemas/sign-up'
 
-export function SignUp() {
+export const SignUp = () => {
   const navigate = useNavigate()
 
   const {
