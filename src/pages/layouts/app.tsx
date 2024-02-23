@@ -1,9 +1,11 @@
 import { Outlet } from 'react-router-dom'
 
-export function AppLayout() {
+import { Header } from '~/components/header'
+
+export const AppLayout = () => {
   return (
     <>
-      <h1>App Layout</h1>
+      <Header />
       <div>
         <Outlet />
       </div>
