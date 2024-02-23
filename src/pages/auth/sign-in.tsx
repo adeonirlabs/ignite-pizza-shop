@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
@@ -14,24 +15,24 @@ export function SignIn() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { isValid, isSubmitting },
   } = useForm<SignInType>({
     resolver: zodResolver(signInSchema),
-    defaultValues: {
-      email: '',
-    },
   })
 
   const handleSignIn = handleSubmit(async (data) => {
-    await sleep(2000)
-    console.info(data)
-    reset()
+    try {
+      await sleep()
+      console.info(data)
+      toast.success('Enviamos um link de autenticação para seu email!')
+    } catch {
+      toast.error('Credenciais inválidas, tente novamente!')
+    }
   })
 
   return (
     <>
-      <Helmet title="Sign In" />
+      <Helmet title="Login" />
       <section className="flex w-full max-w-80 flex-col justify-center gap-6">
         <header className="space-y-2 text-center">
           <h1 className="text-2xl font-semibold">Acessar o painel</h1>
