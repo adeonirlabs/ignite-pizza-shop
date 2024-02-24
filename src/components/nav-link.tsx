@@ -9,8 +9,7 @@ export const NavLink = (props: LinkProps) => {
   return (
     <Link
       className={cn(
-        'flex items-center gap-2 text-muted-foreground transition hover:text-primary',
-        'data-[active=true]:font-bold data-[active=true]:text-primary',
+        'flex items-center gap-2 text-muted-foreground transition hover:text-primary data-[active=true]:text-foreground',
       )}
       data-active={pathname === props.to}
       {...props}
