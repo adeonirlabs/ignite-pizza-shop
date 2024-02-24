@@ -1,10 +1,11 @@
 import { Home, Pizza, UtensilsCrossed } from 'lucide-react'
 import type { ComponentProps } from 'react'
 
-import { NavLink } from '~/components/nav-link'
-import { ThemeMenu } from '~/components/theme-menu'
-import { Separator } from '~/components/ui/separator'
 import { cn } from '~/lib/utils'
+
+import { NavLink } from './nav-link'
+import { ThemeMenu } from './theme-menu'
+import { Separator } from './ui/separator'
 
 const links = [
   {
@@ -33,7 +34,7 @@ const Header = ({ className, ...props }: ComponentProps<'header'>) => {
             </NavLink>
           ))}
         </nav>
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-4">
           <ThemeMenu />
         </div>
       </div>
