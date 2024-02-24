@@ -3,6 +3,7 @@ import type { ComponentProps } from 'react'
 
 import { cn } from '~/lib/utils'
 
+import { AccountMenu } from './account-menu'
 import { NavLink } from './nav-link'
 import { ThemeMenu } from './theme-menu'
 import { Separator } from './ui/separator'
@@ -36,6 +37,7 @@ const Header = ({ className, ...props }: ComponentProps<'header'>) => {
         </nav>
         <div className="ml-auto flex items-center gap-4">
           <ThemeMenu />
+          <AccountMenu />
         </div>
       </div>
     </header>
