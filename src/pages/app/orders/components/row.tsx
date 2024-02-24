@@ -4,6 +4,8 @@ import { Button } from '~/components/ui/button'
 import { Table } from '~/components/ui/table'
 import { Tooltip } from '~/components/ui/tooltip'
 
+import { OrderStatus } from './status'
+
 export const TableRow = () => {
   return (
     <Table.Row>
@@ -20,10 +22,7 @@ export const TableRow = () => {
       <Table.Cell className="w-32 font-mono text-xs">c029r7k9n0000gn8k4ar70sze</Table.Cell>
       <Table.Cell>há 3 dias</Table.Cell>
       <Table.Cell>
-        <div className="flex items-center gap-2">
-          <span className="size-2 rounded-full bg-zinc-400" />
-          <span>Pendente</span>
-        </div>
+        <OrderStatus />
       </Table.Cell>
       <Table.Cell className="font-medium">João da Silva</Table.Cell>
       <Table.Cell className="font-medium">R$ 123,00</Table.Cell>
