@@ -2,6 +2,7 @@ import { Home, Pizza, UtensilsCrossed } from 'lucide-react'
 import type { ComponentProps } from 'react'
 
 import { NavLink } from '~/components/nav-link'
+import { ThemeToggle } from '~/components/theme-toggle'
 import { Separator } from '~/components/ui/separator'
 import { cn } from '~/lib/utils'
 
@@ -32,6 +33,9 @@ const Header = ({ className, ...props }: ComponentProps<'header'>) => {
             </NavLink>
           ))}
         </nav>
+        <div className="ml-auto">
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   )
