@@ -1,4 +1,4 @@
-import { Ban, Check, Search } from 'lucide-react'
+import { Ban, Check, FolderSearch } from 'lucide-react'
 
 import { Button } from '~/components/ui/button'
 import { Table } from '~/components/ui/table'
@@ -11,7 +11,7 @@ export const TableRow = () => {
         <Tooltip>
           <Tooltip.Trigger asChild>
             <Button aria-label="Detalhes do pedido" size="icon-xs" variant="outline">
-              <Search className="size-4" />
+              <FolderSearch className="size-4" />
             </Button>
           </Tooltip.Trigger>
           <Tooltip.Content>Detalhes do pedido</Tooltip.Content>
