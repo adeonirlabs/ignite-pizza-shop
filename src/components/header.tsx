@@ -23,8 +23,8 @@ const links = [
 
 const Header = ({ className, ...props }: ComponentProps<'header'>) => {
   return (
-    <header className={cn('border-b', className)} {...props}>
-      <div className="flex h-16 items-center gap-6 px-10">
+    <header className={cn('border-b bg-muted-foreground/5', className)} {...props}>
+      <div className="flex h-16 items-center gap-6 px-6">
         <Pizza className="size-6" />
         <Separator className="h-8" orientation="vertical" />
         <nav className="flex items-center gap-6">
