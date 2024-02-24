@@ -1,9 +1,11 @@
 import { Ban, Check, FolderSearch } from 'lucide-react'
 
 import { Button } from '~/components/ui/button'
+import { Dialog } from '~/components/ui/dialog'
 import { Table } from '~/components/ui/table'
 import { Tooltip } from '~/components/ui/tooltip'
 
+import { OrderDetails } from './details'
 import { OrderStatus } from './status'
 
 export const TableRow = () => {
@@ -12,9 +14,16 @@ export const TableRow = () => {
       <Table.Cell>
         <Tooltip>
           <Tooltip.Trigger asChild>
-            <Button aria-label="Detalhes do pedido" size="icon-xs" variant="outline">
-              <FolderSearch className="size-4" />
-            </Button>
+            <Dialog>
+              <Dialog.Trigger asChild>
+                <Button aria-label="Detalhes do pedido" size="icon-xs" variant="outline">
+                  <FolderSearch className="size-4" />
+                </Button>
+              </Dialog.Trigger>
+              <Dialog.Content className="max-w-2xl">
+                <OrderDetails />
+              </Dialog.Content>
+            </Dialog>
           </Tooltip.Trigger>
           <Tooltip.Content>Detalhes do pedido</Tooltip.Content>
         </Tooltip>
