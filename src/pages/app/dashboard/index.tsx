@@ -3,7 +3,9 @@ import { Helmet } from 'react-helmet-async'
 import { CancelledByMonthCard } from './components/canceled-by-month-card'
 import { OrdersByDayCard } from './components/orders-by-day-card'
 import { OrdersByMonthCard } from './components/orders-by-month-card'
+import { PopularProductsChart } from './components/propular-products-chart'
 import { RevenueCard } from './components/renevue-card'
+import { RevenueChart } from './components/revenue-chart'
 
 export const Dashboard = () => {
   return (
@@ -17,6 +19,10 @@ export const Dashboard = () => {
         <OrdersByMonthCard />
         <OrdersByDayCard />
         <CancelledByMonthCard />
+      </section>
+      <section className="grid grid-cols-9 gap-4">
+        <RevenueChart />
+        <PopularProductsChart />
       </section>
     </>
   )
