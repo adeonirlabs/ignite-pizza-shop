@@ -11,27 +11,25 @@ export const Orders = () => {
   return (
     <>
       <Helmet title="Pedidos" />
-      <main className="flex flex-col gap-4 p-6">
-        <header className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-primary">Pedidos</h1>
-          <div className="space-y-3">
-            <TableFilters />
-          </div>
-        </header>
-        <div className="rounded border">
-          <Table>
-            <Table.Header>
-              <TableHead />
-            </Table.Header>
-            <Table.Body>
-              {Array.from({ length: 10 }).map((_, index) => (
-                <TableRow key={index} />
-              ))}
-            </Table.Body>
-          </Table>
-          <Pagination currentPage={1} perPage={10} totalCount={100} />
+      <header className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold">Pedidos</h1>
+        <div className="space-y-3">
+          <TableFilters />
         </div>
-      </main>
+      </header>
+      <section className="rounded border">
+        <Table>
+          <Table.Header>
+            <TableHead />
+          </Table.Header>
+          <Table.Body>
+            {Array.from({ length: 10 }).map((_, index) => (
+              <TableRow key={index} />
+            ))}
+          </Table.Body>
+        </Table>
+        <Pagination currentPage={1} perPage={10} totalCount={100} />
+      </section>
     </>
   )
 }

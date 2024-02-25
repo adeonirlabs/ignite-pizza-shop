@@ -6,7 +6,9 @@ export const AppLayout = () => {
   return (
     <>
       <Header />
-      <Outlet />
+      <main className="flex flex-col gap-4 p-6">
+        <Outlet />
+      </main>
     </>
   )
 }
