@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
+import { useSignUpMutation } from '~/api/sign-up'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import { sleep } from '~/lib/utils'
 import type { SignUpType } from '~/schemas/sign-up'
 import { signUpSchema } from '~/schemas/sign-up'
 
@@ -23,15 +23,18 @@ export const SignUp = () => {
     resolver: zodResolver(signUpSchema),
   })
 
+  const { mutateAsync: signUp } = useSignUpMutation()
+
   const handleSignUp = handleSubmit(async (data) => {
+    const { company, email, manager, phone } = data
+
     try {
-      await sleep()
-      console.info(data)
+      await signUp({ restaurantName: company, email, managerName: manager, phone })
       toast.success('Estabelecimento cadastrado com sucesso!', {
         action: {
           label: 'Login',
           onClick: () => {
-            navigate('/sign-in')
+            navigate(`/sign-in?email=${email}`)
           },
         },
       })
