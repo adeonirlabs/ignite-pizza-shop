@@ -5,26 +5,34 @@ import { useProfileQuery } from '~/api/profile'
 
 import { Button } from './ui/button'
 import { DropdownMenu } from './ui/dropdown-menu'
+import { Skeleton } from './ui/skeleton'
 
 export const AccountMenu = () => {
-  const { data: profile } = useProfileQuery()
-  const { data: managedRestaurant } = useManagedRestaurantQuery()
+  const { data: profile, isLoading: isProfileLoading } = useProfileQuery()
+  const { data: managedRestaurant, isLoading: isManagedRestaurantLoading } = useManagedRestaurantQuery()
 
   return (
     <DropdownMenu>
       <DropdownMenu.Trigger asChild>
         <Button className="flex select-none items-center gap-2" variant="outline">
-          {managedRestaurant?.name}
+          {isManagedRestaurantLoading ? <Skeleton className="h-4 w-24" /> : managedRestaurant?.name}
           <ChevronDown className="size-4" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" className="min-w-48 max-w-72">
         <DropdownMenu.Label className="flex items-center">
           <User className="mr-2 size-4" />
-          <div className="flex flex-col">
-            <span>{profile?.name}</span>
-            <span className="truncate text-xs font-normal text-muted-foreground">{profile?.email}</span>
-          </div>
+          {isProfileLoading ? (
+            <div className="flex flex-col gap-1.5">
+              <Skeleton className="mt-0.5 h-4 w-24" />
+              <Skeleton className="h-3 w-32" />
+            </div>
+          ) : (
+            <div className="flex flex-col gap-1">
+              <span>{profile?.name}</span>
+              <span className="truncate text-xs font-normal text-muted-foreground">{profile?.email}</span>
+            </div>
+          )}
         </DropdownMenu.Label>
         <DropdownMenu.Separator />
         <DropdownMenu.Item>
