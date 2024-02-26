@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 
+import { useSignInQuery } from '~/api/sign-in'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import { sleep } from '~/lib/utils'
 import type { SignInType } from '~/schemas/sign-in'
 import { signInSchema } from '~/schemas/sign-in'
 
@@ -21,10 +21,13 @@ export const SignIn = () => {
     resolver: zodResolver(signInSchema),
   })
 
+  const { mutateAsync: signIn } = useSignInQuery()
+
   const handleSignIn = handleSubmit(async (data) => {
+    const { email } = data
+
     try {
-      await sleep()
-      console.info(data)
+      await signIn({ email })
       toast.success('Enviamos um link de autenticação para seu email!')
     } catch {
       toast.error('Credenciais inválidas, tente novamente!')
