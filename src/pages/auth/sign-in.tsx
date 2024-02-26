@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { useSignInMutation } from '~/api/sign-in'
@@ -13,12 +13,17 @@ import type { SignInType } from '~/schemas/sign-in'
 import { signInSchema } from '~/schemas/sign-in'
 
 export const SignIn = () => {
+  const [params] = useSearchParams()
+
   const {
     register,
     handleSubmit,
     formState: { isValid, isSubmitting },
   } = useForm<SignInType>({
     resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: params.get('email') ?? '',
+    },
   })
 
   const { mutateAsync: signIn } = useSignInMutation()
