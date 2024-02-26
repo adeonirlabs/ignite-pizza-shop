@@ -17,10 +17,10 @@ const signInKeys = {
 }
 
 const signInQueries = {
-  useSignInQuery: () =>
+  useSignInMutation: () =>
     useMutation({
       mutationFn: async ({ email }: SignInRequest) => api.post(endpoints.signIn, { email }),
     }),
 }
 
-export const { useSignInQuery } = signInQueries
+export const { useSignInMutation } = signInQueries

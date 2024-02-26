@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 
-import { useSignInQuery } from '~/api/sign-in'
+import { useSignInMutation } from '~/api/sign-in'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
@@ -21,7 +21,7 @@ export const SignIn = () => {
     resolver: zodResolver(signInSchema),
   })
 
-  const { mutateAsync: signIn } = useSignInQuery()
+  const { mutateAsync: signIn } = useSignInMutation()
 
   const handleSignIn = handleSubmit(async (data) => {
     const { email } = data
