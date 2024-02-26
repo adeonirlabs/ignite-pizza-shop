@@ -12,21 +12,21 @@ export const TableRow = () => {
   return (
     <Table.Row>
       <Table.Cell>
-        <Tooltip>
-          <Tooltip.Trigger asChild>
-            <Dialog>
-              <Dialog.Trigger asChild>
+        <Dialog>
+          <Tooltip>
+            <Dialog.Trigger asChild>
+              <Tooltip.Trigger asChild>
                 <Button aria-label="Detalhes do pedido" size="icon-xs" variant="outline">
                   <FolderSearch className="size-4" />
                 </Button>
-              </Dialog.Trigger>
-              <Dialog.Content className="max-w-2xl">
-                <OrderDetails />
-              </Dialog.Content>
-            </Dialog>
-          </Tooltip.Trigger>
-          <Tooltip.Content>Detalhes do pedido</Tooltip.Content>
-        </Tooltip>
+              </Tooltip.Trigger>
+            </Dialog.Trigger>
+            <Dialog.Content className="max-w-2xl">
+              <OrderDetails />
+            </Dialog.Content>
+            <Tooltip.Content>Detalhes do pedido</Tooltip.Content>
+          </Tooltip>
+        </Dialog>
       </Table.Cell>
       <Table.Cell className="w-32 font-mono text-xs">c029r7k9n0000gn8k4ar70sze</Table.Cell>
       <Table.Cell>há 3 dias</Table.Cell>
