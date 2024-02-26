@@ -5,7 +5,7 @@ import { api } from '~/lib/axios'
 import type { ProfileResponse } from './types'
 
 const endpoints = {
-  profile: '/me',
+  me: '/me',
 }
 
 const profileKeys = {
@@ -20,7 +20,8 @@ const profileQueries = {
   useProfileQuery: () =>
     useQuery({
       queryKey: profileKeys.all,
-      queryFn: async () => api.get<ProfileResponse>(endpoints.profile).then((res) => res.data),
+      queryFn: async () => api.get<ProfileResponse>(endpoints.me).then((res) => res.data),
+      staleTime: Infinity,
     }),
 }
 
