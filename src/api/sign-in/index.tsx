@@ -8,14 +8,6 @@ const endpoints = {
   signIn: '/authenticate',
 }
 
-const signInKeys = {
-  all: ['signIn'] as const,
-  lists: () => [...signInKeys.all, 'list'] as const,
-  list: (filters: string) => [...signInKeys.lists(), { filters }] as const,
-  details: () => [...signInKeys.all, 'detail'] as const,
-  detail: (id: number) => [...signInKeys.details(), id] as const,
-}
-
 const signInQueries = {
   useSignInMutation: () =>
     useMutation({
