@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
-import { useRestaurantQuery } from '~/api/restaurant'
+import { useRestaurantMutation, useRestaurantQuery } from '~/api/restaurant'
 import type { ProfileType } from '~/schemas/profile'
 import { profileSchema } from '~/schemas/profile'
 
@@ -14,6 +15,7 @@ import { Textarea } from '../ui/textarea'
 
 export const ProfileDialog = () => {
   const { data: restaurant } = useRestaurantQuery()
+  const { mutateAsync: updateRestaurant } = useRestaurantMutation()
 
   const {
     register,
@@ -27,8 +29,15 @@ export const ProfileDialog = () => {
     },
   })
 
-  const handleProfile = handleSubmit((data) => {
-    console.log(data)
+  const handleProfile = handleSubmit(async (data) => {
+    const { name, description } = data
+
+    try {
+      await updateRestaurant({ name, description })
+      toast.success('Perfil do estabelecimento atualizado com sucesso!')
+    } catch {
+      toast.error('Algo deu errado, tente novamente!')
+    }
   })
 
   return (
