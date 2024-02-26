@@ -36,7 +36,7 @@ export const SignUp = () => {
         },
       })
     } catch {
-      toast.error('Erro ao cadastrar estabelicimento!')
+      toast.error('Erro ao cadastrar estabelecimento!')
     }
   })
 
