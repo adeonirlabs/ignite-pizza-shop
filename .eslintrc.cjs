@@ -105,7 +105,7 @@ module.exports = {
       { blankLine: "always", prev: "directive", next: "*" },
     ],
     "no-console": [
-      "error",
+      "warn",
       {
         allow: ["info", "warn", "error"],
       },
