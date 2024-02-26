@@ -28,7 +28,20 @@ const restaurantQueries = {
   useRestaurantMutation: () =>
     useMutation({
       mutationFn: async (data: RestaurantRequest) => api.put<RestaurantRequest>(endpoints.profile, data),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: restaurantKeys.all }),
+      onMutate: async (data) => {
+        await queryClient.cancelQueries({ queryKey: restaurantKeys.all })
+        const previousData = queryClient.getQueryData<RestaurantRequest>(restaurantKeys.all)
+
+        queryClient.setQueryData<RestaurantRequest>(restaurantKeys.all, { ...previousData, ...data })
+
+        return { previousData }
+      },
+      onError: (_, __, context) => {
+        if (context?.previousData) {
+          queryClient.setQueryData<RestaurantRequest>(restaurantKeys.all, context.previousData)
+        }
+      },
+      onSettled: () => queryClient.invalidateQueries({ queryKey: restaurantKeys.all }),
     }),
 }
 
