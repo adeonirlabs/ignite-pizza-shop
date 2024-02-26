@@ -76,6 +76,12 @@ const Header = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
 
 Header.displayName = 'DialogHeader'
 
+const Body = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('flex flex-col', className)} {...props} />
+)
+
+Body.displayName = 'DialogBody'
+
 const Footer = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)} {...props} />
 )
@@ -108,6 +114,7 @@ export const Dialog = Object.assign(Root, {
   Trigger,
   Content,
   Header,
+  Body,
   Footer,
   Title,
   Description,
