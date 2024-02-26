@@ -6,3 +6,8 @@ export interface RestaurantResponse {
   createdAt: Date | null
   updatedAt: Date | null
 }
+
+export interface RestaurantRequest {
+  name: string
+  description: string | null
+}

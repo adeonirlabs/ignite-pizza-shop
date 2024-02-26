@@ -1,8 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { api } from '~/lib/axios'
+import { queryClient } from '~/lib/react-query'
 
-import type { RestaurantResponse } from './types'
+import type { RestaurantRequest, RestaurantResponse } from './types'
 
 const endpoints = {
   restaurant: '/managed-restaurant',
@@ -24,6 +25,11 @@ const restaurantQueries = {
       queryFn: async () => api.get<RestaurantResponse>(endpoints.restaurant).then((res) => res.data),
       staleTime: Infinity,
     }),
+  useRestaurantMutation: () =>
+    useMutation({
+      mutationFn: async (data: RestaurantRequest) => api.put<RestaurantRequest>(endpoints.profile, data),
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: restaurantKeys.all }),
+    }),
 }
 
-export const { useRestaurantQuery } = restaurantQueries
+export const { useRestaurantQuery, useRestaurantMutation } = restaurantQueries
