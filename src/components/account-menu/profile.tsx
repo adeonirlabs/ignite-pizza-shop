@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { useManagedRestaurantQuery } from '~/api/managed-restaurant'
+import { useRestaurantQuery } from '~/api/restaurant'
 import type { ProfileType } from '~/schemas/profile'
 import { profileSchema } from '~/schemas/profile'
 
@@ -13,7 +13,7 @@ import { Label } from '../ui/label'
 import { Textarea } from '../ui/textarea'
 
 export const ProfileDialog = () => {
-  const { data: managedRestaurant } = useManagedRestaurantQuery()
+  const { data: restaurant } = useRestaurantQuery()
 
   const {
     register,
@@ -22,8 +22,8 @@ export const ProfileDialog = () => {
   } = useForm<ProfileType>({
     resolver: zodResolver(profileSchema),
     values: {
-      name: managedRestaurant?.name ?? '',
-      description: managedRestaurant?.description ?? '',
+      name: restaurant?.name ?? '',
+      description: restaurant?.description ?? '',
     },
   })
 
@@ -34,10 +34,8 @@ export const ProfileDialog = () => {
   return (
     <>
       <Dialog.Header>
-        <Dialog.Title>{managedRestaurant?.name}</Dialog.Title>
-        {managedRestaurant?.description ? (
-          <Dialog.Description>{managedRestaurant.description}</Dialog.Description>
-        ) : null}
+        <Dialog.Title>{restaurant?.name}</Dialog.Title>
+        {restaurant?.description ? <Dialog.Description>{restaurant.description}</Dialog.Description> : null}
       </Dialog.Header>
       <Dialog.Body>
         <form className="gap-4 space-y-4" id="profile" onSubmit={handleProfile}>

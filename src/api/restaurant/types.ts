@@ -1,4 +1,4 @@
-export interface ManagedRestaurantResponse {
+export interface RestaurantResponse {
   id: string
   name: string
   description: string | null

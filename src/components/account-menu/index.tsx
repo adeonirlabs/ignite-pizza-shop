@@ -1,7 +1,7 @@
 import { Building, ChevronDown, LogOut, User } from 'lucide-react'
 
-import { useManagedRestaurantQuery } from '~/api/managed-restaurant'
 import { useProfileQuery } from '~/api/profile'
+import { useRestaurantQuery } from '~/api/restaurant'
 
 import { Button } from '../ui/button'
 import { Dialog } from '../ui/dialog'
@@ -11,14 +11,14 @@ import { ProfileDialog } from './profile'
 
 export const AccountMenu = () => {
   const { data: profile, isLoading: isProfileLoading } = useProfileQuery()
-  const { data: managedRestaurant, isLoading: isManagedRestaurantLoading } = useManagedRestaurantQuery()
+  const { data: restaurant, isLoading: isRestaurantLoading } = useRestaurantQuery()
 
   return (
     <Dialog>
       <DropdownMenu>
         <DropdownMenu.Trigger asChild>
           <Button className="flex select-none items-center gap-2" variant="outline">
-            {isManagedRestaurantLoading ? <Skeleton className="h-4 w-24" /> : managedRestaurant?.name}
+            {isRestaurantLoading ? <Skeleton className="h-4 w-24" /> : restaurant?.name}
             <ChevronDown className="size-4" />
           </Button>
         </DropdownMenu.Trigger>
