@@ -1,7 +1,9 @@
 import { Building, ChevronDown, LogOut, User } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 import { useProfileQuery } from '~/api/profile'
 import { useRestaurantQuery } from '~/api/restaurant'
+import { useSignOutMutation } from '~/api/sign-out'
 
 import { Button } from '../ui/button'
 import { Dialog } from '../ui/dialog'
@@ -10,8 +12,17 @@ import { Skeleton } from '../ui/skeleton'
 import { ProfileDialog } from './profile'
 
 export const AccountMenu = () => {
+  const navigate = useNavigate()
+
   const { data: profile, isLoading: isProfileLoading } = useProfileQuery()
   const { data: restaurant, isLoading: isRestaurantLoading } = useRestaurantQuery()
+  const { mutateAsync: signOut } = useSignOutMutation()
+
+  const handleSignOut = async () => {
+    await signOut().then(() => {
+      navigate('/sign-in', { replace: true })
+    })
+  }
 
   return (
     <Dialog>
@@ -44,9 +55,11 @@ export const AccountMenu = () => {
               Perfil
             </DropdownMenu.Item>
           </Dialog.Trigger>
-          <DropdownMenu.Item className="text-rose-500 dark:text-rose-400">
-            <LogOut className="mr-2 size-4" />
-            Sair
+          <DropdownMenu.Item asChild className="">
+            <button className="w-full !text-destructive" onClick={handleSignOut} type="button">
+              <LogOut className="mr-2 size-4" />
+              Sair
+            </button>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu>
