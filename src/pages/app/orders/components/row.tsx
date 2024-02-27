@@ -1,5 +1,8 @@
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { Ban, Check, FolderSearch } from 'lucide-react'
 
+import type { Order } from '~/api/orders/types'
 import { Button } from '~/components/ui/button'
 import { Dialog } from '~/components/ui/dialog'
 import { Table } from '~/components/ui/table'
@@ -8,7 +11,11 @@ import { Tooltip } from '~/components/ui/tooltip'
 import { OrderDetails } from './details'
 import { OrderStatus } from './status'
 
-export const TableRow = () => {
+interface TableRowProps {
+  order: Order
+}
+
+export const TableRow = ({ order }: TableRowProps) => {
   return (
     <Table.Row>
       <Table.Cell>
@@ -28,13 +35,15 @@ export const TableRow = () => {
           </Tooltip>
         </Dialog>
       </Table.Cell>
-      <Table.Cell className="w-32 font-mono text-xs">c029r7k9n0000gn8k4ar70sze</Table.Cell>
-      <Table.Cell>há 3 dias</Table.Cell>
+      <Table.Cell className="w-32 font-mono text-xs">{order.orderId}</Table.Cell>
+      <Table.Cell>{formatDistanceToNow(new Date(order.createdAt), { addSuffix: true, locale: ptBR })}</Table.Cell>
       <Table.Cell>
-        <OrderStatus />
+        <OrderStatus status={order.status} />
       </Table.Cell>
-      <Table.Cell className="font-medium">João da Silva</Table.Cell>
-      <Table.Cell className="font-medium">R$ 123,00</Table.Cell>
+      <Table.Cell className="font-medium">{order.customerName}</Table.Cell>
+      <Table.Cell className="font-medium">
+        {order.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+      </Table.Cell>
       <Table.Cell className="flex items-center gap-2">
         <Tooltip>
           <Tooltip.Trigger asChild>
