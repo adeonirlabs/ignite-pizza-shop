@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import { useOrdersQuery } from '~/api/orders'
+import type { Status } from '~/api/orders/types'
 import { Pagination } from '~/components/pagination'
 import { Table } from '~/components/ui/table'
 
@@ -13,12 +14,16 @@ import { TableRow } from './components/row'
 export const Orders = () => {
   const [params, setParams] = useSearchParams()
 
+  const orderId = params.get('order')
+  const customerName = params.get('name')
+  const status = params.get('status') as Status | null
+
   const pageIndex = z.coerce
     .number()
     .transform((value: number) => value - 1)
     .parse(params.get('page') ?? '1')
 
-  const { data: result } = useOrdersQuery({ pageIndex })
+  const { data: result } = useOrdersQuery({ pageIndex, orderId, customerName, status })
 
   const handlePageChange = (page: number) => {
     setParams({ page: String(page + 1) })
