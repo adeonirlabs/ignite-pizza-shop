@@ -7,4 +7,4 @@ export const signUpSchema = z.object({
   phone: z.string(),
 })
 
-export type SignUpType = z.infer<typeof signUpSchema>
+export type SignUpSchema = z.infer<typeof signUpSchema>

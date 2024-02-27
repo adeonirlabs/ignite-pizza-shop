@@ -9,7 +9,7 @@ import { useSignInMutation } from '~/api/sign-in'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import type { SignInType } from '~/schemas/sign-in'
+import type { SignInSchema } from '~/schemas/sign-in'
 import { signInSchema } from '~/schemas/sign-in'
 
 export const SignIn = () => {
@@ -19,7 +19,7 @@ export const SignIn = () => {
     register,
     handleSubmit,
     formState: { isValid, isSubmitting },
-  } = useForm<SignInType>({
+  } = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: params.get('email') ?? '',

@@ -9,7 +9,7 @@ import { useSignUpMutation } from '~/api/sign-up'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import type { SignUpType } from '~/schemas/sign-up'
+import type { SignUpSchema } from '~/schemas/sign-up'
 import { signUpSchema } from '~/schemas/sign-up'
 
 export const SignUp = () => {
@@ -19,7 +19,7 @@ export const SignUp = () => {
     register,
     handleSubmit,
     formState: { isValid, isSubmitting },
-  } = useForm<SignUpType>({
+  } = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
   })
 

@@ -4,4 +4,4 @@ export const signInSchema = z.object({
   email: z.string().email(),
 })
 
-export type SignInType = z.infer<typeof signInSchema>
+export type SignInSchema = z.infer<typeof signInSchema>

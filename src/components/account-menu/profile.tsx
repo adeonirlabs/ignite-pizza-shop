@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { useRestaurantMutation, useRestaurantQuery } from '~/api/restaurant'
-import type { ProfileType } from '~/schemas/profile'
+import type { ProfileSchema } from '~/schemas/profile'
 import { profileSchema } from '~/schemas/profile'
 
 import { Button } from '../ui/button'
@@ -21,7 +21,7 @@ export const ProfileDialog = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ProfileType>({
+  } = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     values: {
       name: restaurant?.name ?? '',

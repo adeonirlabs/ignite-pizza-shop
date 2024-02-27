@@ -5,4 +5,4 @@ export const profileSchema = z.object({
   description: z.string(),
 })
 
-export type ProfileType = z.infer<typeof profileSchema>
+export type ProfileSchema = z.infer<typeof profileSchema>
