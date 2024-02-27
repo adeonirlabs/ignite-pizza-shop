@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet-async'
+import { useSearchParams } from 'react-router-dom'
+import { z } from 'zod'
 
 import { useOrdersQuery } from '~/api/orders'
 import { Pagination } from '~/components/pagination'
@@ -9,7 +11,18 @@ import { TableHead } from './components/head'
 import { TableRow } from './components/row'
 
 export const Orders = () => {
-  const { data: result } = useOrdersQuery()
+  const [params, setParams] = useSearchParams()
+
+  const pageIndex = z.coerce
+    .number()
+    .transform((value: number) => value - 1)
+    .parse(params.get('page') ?? '1')
+
+  const { data: result } = useOrdersQuery({ pageIndex })
+
+  const handlePageChange = (page: number) => {
+    setParams({ page: String(page + 1) })
+  }
 
   return (
     <>
@@ -27,7 +40,14 @@ export const Orders = () => {
           </Table.Header>
           <Table.Body>{result?.orders.map((order) => <TableRow key={order.orderId} order={order} />)}</Table.Body>
         </Table>
-        <Pagination currentPage={1} perPage={10} totalCount={100} />
+        {result ? (
+          <Pagination
+            onPageChange={handlePageChange}
+            pageIndex={result.meta.pageIndex}
+            perPage={result.meta.perPage}
+            totalCount={result.meta.totalCount}
+          />
+        ) : null}
       </section>
     </>
   )
