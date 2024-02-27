@@ -20,7 +20,7 @@ const items = [
     label: 'Cancelado',
   },
   {
-    value: 'in-process',
+    value: 'processing',
     label: 'Em preparo',
   },
   {
