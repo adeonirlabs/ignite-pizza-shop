@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
+import { useOrdersQuery } from '~/api/orders'
 import { Pagination } from '~/components/pagination'
 import { Table } from '~/components/ui/table'
 
@@ -8,6 +9,8 @@ import { TableHead } from './components/head'
 import { TableRow } from './components/row'
 
 export const Orders = () => {
+  const { data: result } = useOrdersQuery()
+
   return (
     <>
       <Helmet title="Pedidos" />
@@ -22,11 +25,7 @@ export const Orders = () => {
           <Table.Header>
             <TableHead />
           </Table.Header>
-          <Table.Body>
-            {Array.from({ length: 10 }).map((_, index) => (
-              <TableRow key={index} />
-            ))}
-          </Table.Body>
+          <Table.Body>{result?.orders.map((order) => <TableRow key={order.orderId} order={order} />)}</Table.Body>
         </Table>
         <Pagination currentPage={1} perPage={10} totalCount={100} />
       </section>
