@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { api } from '~/lib/axios'
 
-import type { OrdersResponse } from './types'
+import type { OrdersRequest, OrdersResponse } from './types'
 
 const endpoints = {
   orders: '/orders',
@@ -17,11 +17,10 @@ const ordersKeys = {
 }
 
 const ordersQueries = {
-  useOrdersQuery: () =>
+  useOrdersQuery: ({ pageIndex }: OrdersRequest) =>
     useQuery({
-      queryKey: ordersKeys.all,
-      queryFn: async () =>
-        api.get<OrdersResponse>(endpoints.orders, { params: { pageIndex: 0 } }).then((res) => res.data),
+      queryKey: ordersKeys.list(String(pageIndex)),
+      queryFn: async () => api.get<OrdersResponse>(endpoints.orders, { params: { pageIndex } }).then((res) => res.data),
     }),
 }
 

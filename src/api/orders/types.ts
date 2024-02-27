@@ -18,3 +18,7 @@ export interface OrdersResponse {
   orders: Order[]
   meta: Meta
 }
+
+export interface OrdersRequest {
+  pageIndex?: number | null
+}
