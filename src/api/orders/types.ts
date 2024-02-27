@@ -6,7 +6,7 @@ export interface Order {
   createdAt: string
 }
 
-export type Status = 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
+export type Status = 'all' | 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
 
 export interface Meta {
   pageIndex: number
@@ -21,4 +21,7 @@ export interface OrdersResponse {
 
 export interface OrdersRequest {
   pageIndex?: number | null
+  orderId?: string | null
+  customerName?: string | null
+  status?: Status | null
 }
