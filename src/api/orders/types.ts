@@ -1,10 +1,12 @@
 export interface Order {
   orderId: string
-  status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
+  status: Status
   customerName: string
   total: number
-  createdAt: Date
+  createdAt: string
 }
+
+export type Status = 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
 
 export interface Meta {
   pageIndex: number
