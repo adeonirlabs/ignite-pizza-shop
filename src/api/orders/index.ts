@@ -11,16 +11,21 @@ const endpoints = {
 const ordersKeys = {
   all: ['orders'] as const,
   lists: () => [...ordersKeys.all, 'list'] as const,
-  list: (filters: string) => [...ordersKeys.lists(), { filters }] as const,
+  list: (filters: string | string[]) => [...ordersKeys.lists(), { filters }] as const,
   details: () => [...ordersKeys.all, 'detail'] as const,
   detail: (id: number) => [...ordersKeys.details(), id] as const,
 }
 
 const ordersQueries = {
-  useOrdersQuery: ({ pageIndex }: OrdersRequest) =>
+  useOrdersQuery: ({ pageIndex, orderId, customerName, status }: OrdersRequest) =>
     useQuery({
-      queryKey: ordersKeys.list(String(pageIndex)),
-      queryFn: async () => api.get<OrdersResponse>(endpoints.orders, { params: { pageIndex } }).then((res) => res.data),
+      queryKey: ordersKeys.list([String(pageIndex), orderId || '', customerName || '', status || 'all']),
+      queryFn: async () =>
+        api
+          .get<OrdersResponse>(endpoints.orders, {
+            params: { pageIndex, orderId, customerName, status: status === 'all' ? null : status },
+          })
+          .then((res) => res.data),
     }),
 }
 
