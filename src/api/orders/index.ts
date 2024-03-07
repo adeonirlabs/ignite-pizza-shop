@@ -2,10 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 
 import { api } from '~/lib/axios'
 
-import type { OrdersRequest, OrdersResponse } from './types'
+import type { OrderDetailsResponse, OrdersRequest, OrdersResponse } from './types'
 
 const endpoints = {
   orders: '/orders',
+  details: (id: string) => `/orders/${id}`,
 }
 
 const ordersKeys = {
@@ -13,7 +14,7 @@ const ordersKeys = {
   lists: () => [...ordersKeys.all, 'list'] as const,
   list: (filters: string | string[]) => [...ordersKeys.lists(), { filters }] as const,
   details: () => [...ordersKeys.all, 'detail'] as const,
-  detail: (id: number) => [...ordersKeys.details(), id] as const,
+  detail: (id: string) => [...ordersKeys.details(), id] as const,
 }
 
 const ordersQueries = {
@@ -27,6 +28,11 @@ const ordersQueries = {
           })
           .then((res) => res.data),
     }),
+  useOrderDetailsQuery: (id: string) =>
+    useQuery({
+      queryKey: ordersKeys.detail(id),
+      queryFn: async () => api.get<OrderDetailsResponse>(endpoints.details(id)).then((res) => res.data),
+    }),
 }
 
-export const { useOrdersQuery } = ordersQueries
+export const { useOrdersQuery, useOrderDetailsQuery } = ordersQueries
