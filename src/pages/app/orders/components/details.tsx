@@ -13,7 +13,7 @@ interface OrderDetailsProps {
 }
 
 export const OrderDetails = ({ orderId }: OrderDetailsProps) => {
-  const { data: order } = useOrderDetailsQuery(orderId)
+  const { data: order } = useOrderDetailsQuery({ id: orderId })
 
   if (!order) return null
 

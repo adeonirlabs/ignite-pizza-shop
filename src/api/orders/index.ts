@@ -28,7 +28,7 @@ const ordersQueries = {
           })
           .then((res) => res.data),
     }),
-  useOrderDetailsQuery: (id: string) =>
+  useOrderDetailsQuery: ({ id }: OrderDetailsRequest) =>
     useQuery({
       queryKey: ordersKeys.detail(id),
       queryFn: async () => api.get<OrderDetailsResponse>(endpoints.details(id)).then((res) => res.data),

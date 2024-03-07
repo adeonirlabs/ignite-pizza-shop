@@ -52,4 +52,8 @@ export interface OrdersRequest {
   status?: Status | 'all' | null
 }
 
+export interface OrderDetailsRequest {
+  id: string
+}
+
 export type OrderDetailsResponse = OrderDetails
