@@ -11,3 +11,10 @@ export function sleep(ms = 1000) {
     setTimeout(resolve, ms)
   })
 }
+
+export function convertCurrency(amountInCents: number) {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(amountInCents / 100)
+}
