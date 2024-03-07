@@ -1,14 +1,27 @@
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+
+import { useOrderDetailsQuery } from '~/api/orders'
 import { Dialog } from '~/components/ui/dialog'
 import { Table } from '~/components/ui/table'
+import { convertCurrency } from '~/lib/utils'
 
 import { OrderStatus } from './status'
 
-export const OrderDetails = () => {
+interface OrderDetailsProps {
+  orderId: string
+}
+
+export const OrderDetails = ({ orderId }: OrderDetailsProps) => {
+  const { data: order } = useOrderDetailsQuery(orderId)
+
+  if (!order) return null
+
   return (
     <>
       <Dialog.Header>
         <Dialog.Title>Detalhes do pedido</Dialog.Title>
-        <Dialog.Description>Nº: c029r7k9n0000gn8k4ar70sze</Dialog.Description>
+        <Dialog.Description>Nº: {order.id}</Dialog.Description>
       </Dialog.Header>
       <Dialog.Body className="space-y-4">
         <div className="rounded border">
@@ -16,20 +29,26 @@ export const OrderDetails = () => {
             <Table.Body>
               <Table.Row>
                 <Table.Cell className="py-2 text-muted-foreground">Cliente</Table.Cell>
-                <Table.Cell className="flex justify-end py-2">Adeonir Kohl</Table.Cell>
+                <Table.Cell className="flex justify-end py-2">{order.customer.name}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell className="py-2 text-muted-foreground">Telefone</Table.Cell>
-                <Table.Cell className="flex justify-end py-2">(00) 00000-0000</Table.Cell>
+                <Table.Cell className="flex justify-end py-2">{order.customer.phone ?? 'Não informado'}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell className="py-2 text-muted-foreground">E-mail</Table.Cell>
-                <Table.Cell className="flex justify-end py-2">adeonir@gmail.com</Table.Cell>
+                <Table.Cell className="flex justify-end py-2">{order.customer.email}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell className="py-2 text-muted-foreground">Realizado</Table.Cell>
+                <Table.Cell className="flex justify-end py-2">
+                  {formatDistanceToNow(new Date(order.createdAt), { addSuffix: true, locale: ptBR })}
+                </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell className="py-2 text-muted-foreground">Status</Table.Cell>
                 <Table.Cell className="flex justify-end py-2">
-                  <OrderStatus />
+                  <OrderStatus status={order.status} />
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
@@ -46,23 +65,21 @@ export const OrderDetails = () => {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              <Table.Row>
-                <Table.Cell>Pizza</Table.Cell>
-                <Table.Cell className="w-40 text-right">5</Table.Cell>
-                <Table.Cell className="w-40 text-right">R$ 25,00</Table.Cell>
-                <Table.Cell className="w-40 text-right">R$ 125,00</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Pizza</Table.Cell>
-                <Table.Cell className="w-40 text-right">5</Table.Cell>
-                <Table.Cell className="w-40 text-right">R$ 25,00</Table.Cell>
-                <Table.Cell className="w-40 text-right">R$ 125,00</Table.Cell>
-              </Table.Row>
+              {order.orderItems.map((item) => (
+                <Table.Row key={item.id}>
+                  <Table.Cell>{item.product.name}</Table.Cell>
+                  <Table.Cell className="w-40 text-right">{item.quantity}</Table.Cell>
+                  <Table.Cell className="w-40 text-right">{convertCurrency(item.priceInCents)}</Table.Cell>
+                  <Table.Cell className="w-40 text-right">
+                    {convertCurrency(item.priceInCents * item.quantity)}
+                  </Table.Cell>
+                </Table.Row>
+              ))}
             </Table.Body>
             <Table.Footer>
               <Table.Row>
                 <Table.Cell colSpan={3}>Total do pedido</Table.Cell>
-                <Table.Cell className="w-40 text-right font-bold">R$ 250,00</Table.Cell>
+                <Table.Cell className="w-40 text-right font-bold">{convertCurrency(order.totalInCents)}</Table.Cell>
               </Table.Row>
             </Table.Footer>
           </Table>

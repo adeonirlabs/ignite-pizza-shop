@@ -30,7 +30,7 @@ export const TableRow = ({ order }: TableRowProps) => {
               </Tooltip.Trigger>
             </Dialog.Trigger>
             <Dialog.Content className="max-w-2xl">
-              <OrderDetails />
+              <OrderDetails orderId={order.orderId} />
             </Dialog.Content>
             <Tooltip.Content>Detalhes do pedido</Tooltip.Content>
           </Tooltip>
