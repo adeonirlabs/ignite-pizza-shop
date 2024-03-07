@@ -1,12 +1,14 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { api } from '~/lib/axios'
+import { queryClient } from '~/lib/react-query'
 
-import type { OrderDetailsResponse, OrdersRequest, OrdersResponse } from './types'
+import type { OrderDetailsRequest, OrderDetailsResponse, OrdersRequest, OrdersResponse } from './types'
 
 const endpoints = {
   orders: '/orders',
   details: (id: string) => `/orders/${id}`,
+  cancel: (id: string) => `/orders/${id}/cancel`,
 }
 
 const ordersKeys = {
@@ -33,6 +35,15 @@ const ordersQueries = {
       queryKey: ordersKeys.detail(id),
       queryFn: async () => api.get<OrderDetailsResponse>(endpoints.details(id)).then((res) => res.data),
     }),
+  useOrderCancelMutation: () => {
+    return useMutation({
+      mutationFn: async ({ id }: OrderDetailsRequest) => api.patch(endpoints.cancel(id)),
+      onSuccess: async (_, { id }) => {
+        await queryClient.invalidateQueries({ queryKey: ordersKeys.lists() })
+        await queryClient.invalidateQueries({ queryKey: ordersKeys.detail(id) })
+      },
+    })
+  },
 }
 
-export const { useOrdersQuery, useOrderDetailsQuery } = ordersQueries
+export const { useOrdersQuery, useOrderDetailsQuery, useOrderCancelMutation } = ordersQueries
