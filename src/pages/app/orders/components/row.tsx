@@ -2,6 +2,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Ban, Check, FolderSearch } from 'lucide-react'
 
+import { useOrderCancelMutation } from '~/api/orders'
 import type { Order } from '~/api/orders/types'
 import { Button } from '~/components/ui/button'
 import { Dialog } from '~/components/ui/dialog'
@@ -17,6 +18,12 @@ interface TableRowProps {
 }
 
 export const TableRow = ({ order }: TableRowProps) => {
+  const { mutateAsync } = useOrderCancelMutation()
+
+  const handleCancel = async () => {
+    await mutateAsync({ id: order.orderId })
+  }
+
   return (
     <Table.Row>
       <Table.Cell>
@@ -54,7 +61,13 @@ export const TableRow = ({ order }: TableRowProps) => {
         </Tooltip>
         <Tooltip>
           <Tooltip.Trigger asChild>
-            <Button aria-label="Cancelar pedido" size="icon-xs" variant="outline">
+            <Button
+              aria-label="Cancelar pedido"
+              disabled={!['pending', 'processing'].includes(order.status)}
+              onClick={handleCancel}
+              size="icon-xs"
+              variant="outline"
+            >
               <Ban className="size-4" />
             </Button>
           </Tooltip.Trigger>
