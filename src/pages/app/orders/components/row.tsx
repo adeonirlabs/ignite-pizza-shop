@@ -7,6 +7,7 @@ import { Button } from '~/components/ui/button'
 import { Dialog } from '~/components/ui/dialog'
 import { Table } from '~/components/ui/table'
 import { Tooltip } from '~/components/ui/tooltip'
+import { convertCurrency } from '~/lib/utils'
 
 import { OrderDetails } from './details'
 import { OrderStatus } from './status'
@@ -41,9 +42,7 @@ export const TableRow = ({ order }: TableRowProps) => {
         <OrderStatus status={order.status} />
       </Table.Cell>
       <Table.Cell className="font-medium">{order.customerName}</Table.Cell>
-      <Table.Cell className="font-medium">
-        {order.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-      </Table.Cell>
+      <Table.Cell className="font-medium">{convertCurrency(order.total)}</Table.Cell>
       <Table.Cell className="flex items-center gap-2">
         <Tooltip>
           <Tooltip.Trigger asChild>
