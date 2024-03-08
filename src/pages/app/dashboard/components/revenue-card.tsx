@@ -1,8 +1,16 @@
 import { DollarSign } from 'lucide-react'
 
+import { useMonthRevenueQuery } from '~/api/metrics'
 import { Card } from '~/components/ui/card'
+import { convertCurrency } from '~/lib/utils'
+
+import { ShowDiff } from './show-diff'
 
 export const RevenueCard = () => {
+  const { data } = useMonthRevenueQuery()
+
+  if (!data) return null
+
   return (
     <Card>
       <Card.Header className="flex-row items-center justify-between">
@@ -10,9 +18,9 @@ export const RevenueCard = () => {
         <DollarSign className="size-5 text-muted-foreground" />
       </Card.Header>
       <Card.Content className="space-y-2">
-        <span className="block text-3xl font-bold">R$ 1200,00</span>
+        <span className="block text-3xl font-bold">{convertCurrency(data.receipt)}</span>
         <span className="block text-xs text-muted-foreground">
-          <span className="text-emerald-500 dark:text-emerald-400">+2%</span> em relação ao mês passado
+          <ShowDiff value={data.diffFromLastMonth} /> em relação ao mês passado
         </span>
       </Card.Content>
     </Card>

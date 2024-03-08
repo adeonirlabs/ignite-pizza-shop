@@ -4,7 +4,7 @@ import { CancelledByMonthCard } from './components/canceled-by-month-card'
 import { OrdersByDayCard } from './components/orders-by-day-card'
 import { OrdersByMonthCard } from './components/orders-by-month-card'
 import { PopularProductsChart } from './components/propular-products-chart'
-import { RevenueCard } from './components/renevue-card'
+import { RevenueCard } from './components/revenue-card'
 import { RevenueChart } from './components/revenue-chart'
 
 export const Dashboard = () => {
