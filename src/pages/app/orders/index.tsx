@@ -10,7 +10,7 @@ import { Table } from '~/components/ui/table'
 import { TableFilters } from './components/filters'
 import { TableHead } from './components/head'
 import { TableRow } from './components/row'
-import { TableSkeleton } from './components/skeleton'
+import { TableSkeleton } from './components/table-skeleton'
 
 export const Orders = () => {
   const [params, setParams] = useSearchParams()
