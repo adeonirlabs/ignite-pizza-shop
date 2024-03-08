@@ -78,6 +78,7 @@ module.exports = {
     "@typescript-eslint/no-unsafe-member-access": "off",
     "eslint-comments/require-description": "off",
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
+    "import/named": "off",
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
     "import/no-extraneous-dependencies": "off",
