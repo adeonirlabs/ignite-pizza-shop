@@ -2,13 +2,14 @@ import { useQuery } from '@tanstack/react-query'
 
 import { api } from '~/lib/axios'
 
-import type { DayOrdersResponse, MonthOrdersResponse, MonthRevenueResponse } from './types'
+import type { DayOrdersResponse, MonthOrdersResponse, MonthRevenueResponse, PopularProductsResponse } from './types'
 
 const endpoints = {
   dayOrders: '/metrics/day-orders-amount',
   monthRevenue: '/metrics/month-receipt',
   monthOrders: '/metrics/month-orders-amount',
   monthCanceledOrders: '/metrics/month-canceled-orders-amount',
+  popularProducts: '/metrics/popular-products',
 }
 
 const metricsKeys = {
@@ -40,7 +41,17 @@ const metricsQueries = {
       queryKey: metricsKeys.list('month-orders-amount'),
       queryFn: async () => api.get<MonthOrdersResponse>(endpoints.monthCanceledOrders).then((res) => res.data),
     }),
+  usePopularProductsQuery: () =>
+    useQuery({
+      queryKey: metricsKeys.list('popular-products'),
+      queryFn: async () => api.get<PopularProductsResponse>(endpoints.popularProducts).then((res) => res.data),
+    }),
 }
 
-export const { useDayOrdersQuery, useMonthRevenueQuery, useMonthOrdersQuery, useMonthCanceledOrdersQuery } =
-  metricsQueries
+export const {
+  useDayOrdersQuery,
+  useMonthRevenueQuery,
+  useMonthOrdersQuery,
+  useMonthCanceledOrdersQuery,
+  usePopularProductsQuery,
+} = metricsQueries
