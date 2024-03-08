@@ -18,6 +18,11 @@ export type PopularProductsResponse = {
   amount: number
 }[]
 
+export interface DayRevenueRequest {
+  from?: Date
+  to?: Date
+}
+
 export type DayRevenueResponse = {
   date: string
   receipt: number

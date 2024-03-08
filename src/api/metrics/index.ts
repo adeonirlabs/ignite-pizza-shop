@@ -4,6 +4,7 @@ import { api } from '~/lib/axios'
 
 import type {
   DayOrdersResponse,
+  DayRevenueRequest,
   DayRevenueResponse,
   MonthOrdersResponse,
   MonthRevenueResponse,
@@ -33,10 +34,11 @@ const metricsQueries = {
       queryKey: metricsKeys.list('day-orders-amount'),
       queryFn: async () => api.get<DayOrdersResponse>(endpoints.dayOrders).then((res) => res.data),
     }),
-  useDayRevenueQuery: () =>
+  useDayRevenueQuery: ({ from = new Date(), to = new Date() }: DayRevenueRequest) =>
     useQuery({
-      queryKey: metricsKeys.list('day-receipt-in-period'),
-      queryFn: async () => api.get<DayRevenueResponse>(endpoints.dayRevenue).then((res) => res.data),
+      queryKey: metricsKeys.list(['daily-receipt-in-period', from.toISOString(), to.toISOString()]),
+      queryFn: async () =>
+        api.get<DayRevenueResponse>(endpoints.dayRevenue, { params: { from, to } }).then((res) => res.data),
     }),
   useMonthRevenueQuery: () =>
     useQuery({
