@@ -1,4 +1,5 @@
 import { subDays } from 'date-fns'
+import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
@@ -42,7 +43,11 @@ export const DayRevenueChart = () => {
               <Line dataKey="receipt" stroke="#2563eb" strokeWidth={2} type="monotone" />
             </LineChart>
           </ResponsiveContainer>
-        ) : null}
+        ) : (
+          <div className="flex h-60 w-full items-center justify-center">
+            <Loader2 className="size-16 animate-spin text-muted" />
+          </div>
+        )}
       </Card.Content>
     </Card>
   )
