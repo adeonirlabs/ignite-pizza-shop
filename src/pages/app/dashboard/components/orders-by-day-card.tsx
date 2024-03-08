@@ -2,13 +2,12 @@ import { Utensils } from 'lucide-react'
 
 import { useDayOrdersQuery } from '~/api/metrics'
 import { Card } from '~/components/ui/card'
+import { Skeleton } from '~/components/ui/skeleton'
 
 import { ShowDiff } from './show-diff'
 
 export const OrdersByDayCard = () => {
   const { data } = useDayOrdersQuery()
-
-  if (!data) return null
 
   return (
     <Card>
@@ -17,10 +16,19 @@ export const OrdersByDayCard = () => {
         <Utensils className="size-5 text-muted-foreground" />
       </Card.Header>
       <Card.Content className="space-y-2">
-        <span className="block text-3xl font-bold">{data.amount}</span>
-        <span className="block text-xs text-muted-foreground">
-          <ShowDiff value={data.diffFromYesterday} /> em relação a ontem
-        </span>
+        {data ? (
+          <>
+            <span className="block text-3xl font-bold">{data.amount}</span>
+            <span className="block text-xs text-muted-foreground">
+              <ShowDiff value={data.diffFromYesterday} /> em relação a ontem
+            </span>
+          </>
+        ) : (
+          <>
+            <Skeleton className="mt-2 h-7 w-12" />
+            <Skeleton className="h-4 w-32" />
+          </>
+        )}
       </Card.Content>
     </Card>
   )

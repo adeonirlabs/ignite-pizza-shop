@@ -8,7 +8,7 @@ import { Card } from '~/components/ui/card'
 import { DateRangePicker } from '~/components/ui/date-range-picker'
 import { convertCurrency } from '~/lib/utils'
 
-export const RevenueChart = () => {
+export const DayRevenueChart = () => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: subDays(new Date(), 7),
     to: new Date(),
