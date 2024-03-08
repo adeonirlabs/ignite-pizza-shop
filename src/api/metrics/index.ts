@@ -2,10 +2,17 @@ import { useQuery } from '@tanstack/react-query'
 
 import { api } from '~/lib/axios'
 
-import type { DayOrdersResponse, MonthOrdersResponse, MonthRevenueResponse, PopularProductsResponse } from './types'
+import type {
+  DayOrdersResponse,
+  DayRevenueResponse,
+  MonthOrdersResponse,
+  MonthRevenueResponse,
+  PopularProductsResponse,
+} from './types'
 
 const endpoints = {
   dayOrders: '/metrics/day-orders-amount',
+  dayRevenue: '/metrics/daily-receipt-in-period',
   monthRevenue: '/metrics/month-receipt',
   monthOrders: '/metrics/month-orders-amount',
   monthCanceledOrders: '/metrics/month-canceled-orders-amount',
@@ -26,6 +33,11 @@ const metricsQueries = {
       queryKey: metricsKeys.list('day-orders-amount'),
       queryFn: async () => api.get<DayOrdersResponse>(endpoints.dayOrders).then((res) => res.data),
     }),
+  useDayRevenueQuery: () =>
+    useQuery({
+      queryKey: metricsKeys.list('day-receipt-in-period'),
+      queryFn: async () => api.get<DayRevenueResponse>(endpoints.dayRevenue).then((res) => res.data),
+    }),
   useMonthRevenueQuery: () =>
     useQuery({
       queryKey: metricsKeys.list('month-receipt'),
@@ -38,7 +50,7 @@ const metricsQueries = {
     }),
   useMonthCanceledOrdersQuery: () =>
     useQuery({
-      queryKey: metricsKeys.list('month-orders-amount'),
+      queryKey: metricsKeys.list('month-canceled-orders-amount'),
       queryFn: async () => api.get<MonthOrdersResponse>(endpoints.monthCanceledOrders).then((res) => res.data),
     }),
   usePopularProductsQuery: () =>
@@ -50,6 +62,7 @@ const metricsQueries = {
 
 export const {
   useDayOrdersQuery,
+  useDayRevenueQuery,
   useMonthRevenueQuery,
   useMonthOrdersQuery,
   useMonthCanceledOrdersQuery,

@@ -17,3 +17,8 @@ export type PopularProductsResponse = {
   product: string
   amount: number
 }[]
+
+export type DayRevenueResponse = {
+  date: string
+  receipt: number
+}[]
