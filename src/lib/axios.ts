@@ -11,7 +11,8 @@ export const api = axios.create({
 
 if (env.DEV) {
   api.interceptors.response.use(async (config) => {
-    await sleep(500)
+    // Simulate a random delay
+    await sleep(Math.round(Math.random() * 2000))
 
     return config
   })
