@@ -10,6 +10,7 @@ import { Table } from '~/components/ui/table'
 import { TableFilters } from './components/filters'
 import { TableHead } from './components/head'
 import { TableRow } from './components/row'
+import { TableSkeleton } from './components/skeleton'
 
 export const Orders = () => {
   const [params, setParams] = useSearchParams()
@@ -23,7 +24,7 @@ export const Orders = () => {
     .transform((value: number) => value - 1)
     .parse(params.get('page') ?? '1')
 
-  const { data: result } = useOrdersQuery({ pageIndex, orderId, customerName, status })
+  const { data, isLoading } = useOrdersQuery({ pageIndex, orderId, customerName, status })
 
   const handlePageChange = (page: number) => {
     setParams({ page: String(page + 1) })
@@ -43,14 +44,17 @@ export const Orders = () => {
           <Table.Header>
             <TableHead />
           </Table.Header>
-          <Table.Body>{result?.orders.map((order) => <TableRow key={order.orderId} order={order} />)}</Table.Body>
+          <Table.Body>
+            {isLoading ? <TableSkeleton /> : null}
+            {data?.orders.map((order) => <TableRow key={order.orderId} order={order} />)}
+          </Table.Body>
         </Table>
-        {result ? (
+        {data ? (
           <Pagination
             onPageChange={handlePageChange}
-            pageIndex={result.meta.pageIndex}
-            perPage={result.meta.perPage}
-            totalCount={result.meta.totalCount}
+            pageIndex={data.meta.pageIndex}
+            perPage={data.meta.perPage}
+            totalCount={data.meta.totalCount}
           />
         ) : null}
       </section>

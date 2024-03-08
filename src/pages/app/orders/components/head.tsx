@@ -5,7 +5,7 @@ export const TableHead = () => {
     <Table.Row>
       <Table.Head className="w-16" />
       <Table.Head className="w-32">Id</Table.Head>
-      <Table.Head className="w-36">Realizado</Table.Head>
+      <Table.Head className="w-44">Realizado</Table.Head>
       <Table.Head className="w-36">Status</Table.Head>
       <Table.Head className="min-w-48">Cliente</Table.Head>
       <Table.Head className="w-36">Total</Table.Head>
