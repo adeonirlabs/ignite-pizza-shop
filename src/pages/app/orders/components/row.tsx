@@ -1,8 +1,13 @@
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { Ban, Check, FolderSearch } from 'lucide-react'
+import { FolderSearch } from 'lucide-react'
 
-import { useOrderCancelMutation } from '~/api/orders'
+import {
+  useOrderApproveMutation,
+  useOrderCancelMutation,
+  useOrderDeliverMutation,
+  useOrderDispatchMutation,
+} from '~/api/orders'
 import type { Order } from '~/api/orders/types'
 import { Button } from '~/components/ui/button'
 import { Dialog } from '~/components/ui/dialog'
@@ -18,10 +23,25 @@ interface TableRowProps {
 }
 
 export const TableRow = ({ order }: TableRowProps) => {
-  const { mutateAsync } = useOrderCancelMutation()
+  const { mutateAsync: cancel, isPending: isCanceling } = useOrderCancelMutation()
+  const { mutateAsync: approve, isPending: isApproving } = useOrderApproveMutation()
+  const { mutateAsync: dispatch, isPending: isDispatching } = useOrderDispatchMutation()
+  const { mutateAsync: deliver, isPending: isDelivering } = useOrderDeliverMutation()
 
   const handleCancel = async () => {
-    await mutateAsync({ id: order.orderId })
+    await cancel({ id: order.orderId })
+  }
+
+  const handleApprove = async () => {
+    await approve({ id: order.orderId })
+  }
+
+  const handleDispatch = async () => {
+    await dispatch({ id: order.orderId })
+  }
+
+  const handleDeliver = async () => {
+    await deliver({ id: order.orderId })
   }
 
   return (
@@ -50,29 +70,30 @@ export const TableRow = ({ order }: TableRowProps) => {
       </Table.Cell>
       <Table.Cell className="font-medium">{order.customerName}</Table.Cell>
       <Table.Cell className="font-medium">{convertCurrency(order.total)}</Table.Cell>
-      <Table.Cell className="flex items-center gap-2">
-        <Tooltip>
-          <Tooltip.Trigger asChild>
-            <Button aria-label="Confirmar pedido" size="icon-xs" variant="outline">
-              <Check className="size-4" />
-            </Button>
-          </Tooltip.Trigger>
-          <Tooltip.Content>Confirmar pedido</Tooltip.Content>
-        </Tooltip>
-        <Tooltip>
-          <Tooltip.Trigger asChild>
-            <Button
-              aria-label="Cancelar pedido"
-              disabled={!['pending', 'processing'].includes(order.status)}
-              onClick={handleCancel}
-              size="icon-xs"
-              variant="outline"
-            >
-              <Ban className="size-4" />
-            </Button>
-          </Tooltip.Trigger>
-          <Tooltip.Content>Cancelar pedido</Tooltip.Content>
-        </Tooltip>
+      <Table.Cell className="flex w-52 items-center justify-end gap-2">
+        {order.status === 'pending' && (
+          <Button disabled={isApproving} onClick={handleApprove} size="xs" variant="outline">
+            Aprovar
+          </Button>
+        )}
+        {order.status === 'processing' && (
+          <Button disabled={isDispatching} onClick={handleDispatch} size="xs" variant="outline">
+            Entregar
+          </Button>
+        )}
+        {order.status === 'delivering' && (
+          <Button disabled={isDelivering} onClick={handleDeliver} size="xs" variant="outline">
+            Entregue
+          </Button>
+        )}
+        <Button
+          disabled={!['pending', 'processing'].includes(order.status) || isCanceling}
+          onClick={handleCancel}
+          size="xs"
+          variant="outline"
+        >
+          Cancelar
+        </Button>
       </Table.Cell>
     </Table.Row>
   )
