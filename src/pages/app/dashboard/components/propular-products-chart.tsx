@@ -3,19 +3,16 @@
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
 import colors from 'tailwindcss/colors'
 
+import { usePopularProductsQuery } from '~/api/metrics'
 import { Card } from '~/components/ui/card'
-
-const data = [
-  { product: 'Pizza', amount: 62 },
-  { product: 'Fritas', amount: 32 },
-  { product: 'Hamburguer', amount: 50 },
-  { product: 'Alaminuta', amount: 12 },
-  { product: 'Chopp', amount: 85 },
-]
 
 const COLORS = [colors.cyan[500], colors.yellow[500], colors.violet[500], colors.emerald[500], colors.rose[500]]
 
 export const PopularProductsChart = () => {
+  const { data } = usePopularProductsQuery()
+
+  if (!data) return null
+
   return (
     <Card className="col-span-3 space-y-6">
       <Card.Header className="flex-row items-center justify-between">
@@ -31,7 +28,7 @@ export const PopularProductsChart = () => {
               data={data}
               dataKey="amount"
               fill="#8884d8"
-              innerRadius={40}
+              innerRadius={60}
               label={({ cx, cy, midAngle, innerRadius, outerRadius, value, index }) => {
                 const RADIAN = Math.PI / 180
                 const radius = 12 + innerRadius + (outerRadius - innerRadius)
@@ -54,7 +51,7 @@ export const PopularProductsChart = () => {
                 )
               }}
               nameKey="product"
-              outerRadius={100}
+              outerRadius={80}
               paddingAngle={4}
               strokeWidth={0}
             >
