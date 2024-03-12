@@ -4,7 +4,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 import { Toaster } from '~/components/ui/sonner'
 import { Tooltip } from '~/components/ui/tooltip'
-import { ThemeProvider } from '~/providers/theme'
+import { Theme } from '~/providers/theme'
 
 import { queryClient } from './lib/react-query'
 
@@ -13,11 +13,11 @@ export const AppProviders = ({ children }: { children: ReactNode }) => {
     <HelmetProvider>
       <Toaster />
       <Helmet titleTemplate="%s | Pizza Shop" />
-      <ThemeProvider defaultTheme="light" storageKey="pizza-shop-theme">
+      <Theme.Provider defaultTheme="light" storageKey="pizza-shop-theme">
         <Tooltip.Provider delayDuration={300}>
           <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
         </Tooltip.Provider>
-      </ThemeProvider>
+      </Theme.Provider>
     </HelmetProvider>
   )
 }

@@ -2,17 +2,17 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { createContext, useContext, useEffect, useState } from 'react'
 
-type Theme = 'dark' | 'light' | 'system'
+type ThemeType = 'dark' | 'light' | 'system'
 
 interface ThemeProviderProps {
   children: React.ReactNode
-  defaultTheme?: Theme
+  defaultTheme?: ThemeType
   storageKey?: string
 }
 
 interface ThemeProviderState {
-  theme: Theme
-  setTheme: (theme: Theme) => void
+  theme: ThemeType
+  setTheme: (theme: ThemeType) => void
 }
 
 const initialState: ThemeProviderState = {
@@ -20,15 +20,15 @@ const initialState: ThemeProviderState = {
   setTheme: () => null,
 }
 
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
+const Context = createContext<ThemeProviderState>(initialState)
 
-export const ThemeProvider = ({
+const Provider = ({
   children,
   defaultTheme = 'system',
   storageKey = 'vite-ui-theme',
   ...props
 }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(storageKey) as Theme) || defaultTheme)
+  const [theme, setTheme] = useState<ThemeType>(() => (localStorage.getItem(storageKey) as ThemeType) || defaultTheme)
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -48,23 +48,25 @@ export const ThemeProvider = ({
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
+    setTheme: (theme: ThemeType) => {
       localStorage.setItem(storageKey, theme)
       setTheme(theme)
     },
   }
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <Context.Provider {...props} value={value}>
       {children}
-    </ThemeProviderContext.Provider>
+    </Context.Provider>
   )
 }
 
 export const useTheme = () => {
-  const context = useContext(ThemeProviderContext)
+  const context = useContext(Context)
 
   if (context === undefined) throw new Error('useTheme must be used within a ThemeProvider')
 
   return context
 }
+
+export const Theme = { Provider }
