@@ -4,6 +4,7 @@ import type { RenderOptions, RenderResult } from '@testing-library/react'
 import { render } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import type { ReactElement } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
 import { MemoryRouter } from 'react-router-dom'
 
 import { Tooltip } from '~/components/ui/tooltip'
@@ -18,13 +19,15 @@ interface CustomRenderOptions extends RenderOptions {
 const customRender = (ui: ReactElement, options?: CustomRenderOptions): RenderResult =>
   render(ui, {
     wrapper: ({ children }) => (
-      <Theme.Provider defaultTheme="light" storageKey="pizza-shop-theme">
-        <Tooltip.Provider>
-          <MemoryRouter initialEntries={options?.initialRoutes}>
-            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-          </MemoryRouter>
-        </Tooltip.Provider>
-      </Theme.Provider>
+      <HelmetProvider>
+        <Theme.Provider defaultTheme="light" storageKey="pizza-shop-theme">
+          <Tooltip.Provider>
+            <MemoryRouter initialEntries={options?.initialRoutes}>
+              <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+            </MemoryRouter>
+          </Tooltip.Provider>
+        </Theme.Provider>
+      </HelmetProvider>
     ),
     ...options,
   })
