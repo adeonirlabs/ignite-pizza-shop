@@ -4,9 +4,8 @@ import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 import { Toaster } from '~/components/ui/sonner'
 import { Tooltip } from '~/components/ui/tooltip'
+import { queryClient } from '~/lib/react-query'
 import { Theme } from '~/providers/theme'
-
-import { queryClient } from './lib/react-query'
 
 export const AppProviders = ({ children }: { children: ReactNode }) => {
   return (
