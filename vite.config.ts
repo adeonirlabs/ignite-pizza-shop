@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import path from "node:path"
 
 import { defineConfig } from 'vite'
@@ -12,5 +14,12 @@ export default defineConfig({
     alias: {
       "~": path.resolve(__dirname, "./src"),
     },
+  },
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    include: ['src/**/*.spec.{ts,tsx}'],
+    exclude: ['/node_modules/', '/.next/'],
+    setupFiles: './vitest.setup.ts',
   },
 })

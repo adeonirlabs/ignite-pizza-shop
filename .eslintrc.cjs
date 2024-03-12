@@ -47,6 +47,7 @@ module.exports = {
     "tailwind.config.cjs",
     "postcss.config.cjs",
     "vite.config.ts",
+    "vitest.config.ts",
   ],
   plugins: [
     "react",
@@ -119,6 +120,12 @@ module.exports = {
         "import/default": "off",
         "import/no-named-as-default-member": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
+      },
+    },
+    {
+      files: ["src/**/*.spec.{ts,tsx}"],
+      rules: {
+        "no-undef": "off",
       },
     },
   ],
