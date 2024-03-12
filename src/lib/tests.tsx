@@ -4,14 +4,15 @@ import { render } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import type { ReactElement } from 'react'
 
-import { ThemeProvider } from '~/providers/theme'
+import { Tooltip } from '~/components/ui/tooltip'
+import { Theme } from '~/providers/theme'
 
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>): RenderResult =>
   render(ui, {
     wrapper: ({ children }) => (
-      <ThemeProvider defaultTheme="light" storageKey="pizza-shop-theme">
-        {children}
-      </ThemeProvider>
+      <Theme.Provider defaultTheme="light" storageKey="pizza-shop-theme">
+        <Tooltip.Provider>{children}</Tooltip.Provider>
+      </Theme.Provider>
     ),
     ...options,
   })
