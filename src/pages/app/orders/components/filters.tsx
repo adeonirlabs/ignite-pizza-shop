@@ -101,11 +101,23 @@ export const TableFilters = () => {
   return (
     <form className="flex items-center gap-2" onSubmit={handleFilters}>
       <Label className="text-sm font-semibold">Filtros:</Label>
-      <Input className="h-8 w-64" placeholder="Pesquisar por id" type="text" {...register('order')} />
-      <Input className="h-8 w-64" placeholder="Pesquisar por cliente" type="text" {...register('name')} />
-      <Select defaultValue="all" onValueChange={field.onChange} value={field.value}>
-        <Select.Trigger className="h-8 w-40">
-          <Select.Value />
+      <Input
+        aria-label="order"
+        className="h-8 w-64"
+        placeholder="Pesquisar por id"
+        type="text"
+        {...register('order')}
+      />
+      <Input
+        aria-label="name"
+        className="h-8 w-64"
+        placeholder="Pesquisar por cliente"
+        type="text"
+        {...register('name')}
+      />
+      <Select onValueChange={field.onChange} value={field.value}>
+        <Select.Trigger aria-label="status" className="h-8 w-40">
+          <Select.Value defaultValue="all" />
         </Select.Trigger>
         <Select.Content>
           {items.map(({ label, value }) => (
