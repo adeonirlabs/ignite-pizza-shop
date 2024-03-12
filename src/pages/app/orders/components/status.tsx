@@ -16,7 +16,7 @@ const statusMap: Record<Status, { label: string; color: string }> = {
 export const OrderStatus = ({ status }: OrderStatusProps) => {
   return (
     <div className="flex items-center gap-2">
-      <span className={cn('size-2 rounded-full', statusMap[status].color)} />
+      <span className={cn('size-2 rounded-full', statusMap[status].color)} role="presentation" />
       <span>{statusMap[status].label}</span>
     </div>
   )
