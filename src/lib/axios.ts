@@ -9,7 +9,7 @@ export const api = axios.create({
   withCredentials: true,
 })
 
-if (env.DEV) {
+if (env.MODE === 'development') {
   api.interceptors.response.use(async (config) => {
     // Simulate a random delay
     await sleep(Math.round(Math.random() * 2000))
