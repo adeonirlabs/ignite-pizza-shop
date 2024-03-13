@@ -1,4 +1,4 @@
-export interface ProfileResponse {
+export interface MeResponse {
   id: string
   name: string
   email: string

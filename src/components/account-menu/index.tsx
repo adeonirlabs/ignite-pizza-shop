@@ -1,7 +1,7 @@
 import { Building, ChevronDown, LogOut, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
-import { useProfileQuery } from '~/api/profile'
+import { useMeQuery } from '~/api/me'
 import { useRestaurantQuery } from '~/api/restaurant'
 import { useSignOutMutation } from '~/api/sign-out'
 
@@ -14,7 +14,7 @@ import { ProfileDialog } from './profile'
 export const AccountMenu = () => {
   const navigate = useNavigate()
 
-  const { data: profile, isLoading: isProfileLoading } = useProfileQuery()
+  const { data: profile, isLoading: isProfileLoading } = useMeQuery()
   const { data: restaurant, isLoading: isRestaurantLoading } = useRestaurantQuery()
   const { mutateAsync: signOut } = useSignOutMutation()
 
