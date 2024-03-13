@@ -4,7 +4,7 @@ import { api } from '~/lib/axios'
 
 import type { ProfileResponse } from './types'
 
-const endpoints = {
+export const endpoints = {
   me: '/me',
 }
 
