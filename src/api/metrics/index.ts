@@ -6,17 +6,18 @@ import type {
   DayOrdersResponse,
   DayRevenueRequest,
   DayRevenueResponse,
+  MonthCanceledOrdersResponse,
   MonthOrdersResponse,
   MonthRevenueResponse,
   PopularProductsResponse,
 } from './types'
 
-const endpoints = {
+export const endpoints = {
   dayOrders: '/metrics/day-orders-amount',
-  dayRevenue: '/metrics/daily-receipt-in-period',
-  monthRevenue: '/metrics/month-receipt',
   monthOrders: '/metrics/month-orders-amount',
+  monthRevenue: '/metrics/month-receipt',
   monthCanceledOrders: '/metrics/month-canceled-orders-amount',
+  dayRevenue: '/metrics/daily-receipt-in-period',
   popularProducts: '/metrics/popular-products',
 }
 
@@ -53,7 +54,7 @@ const metricsQueries = {
   useMonthCanceledOrdersQuery: () =>
     useQuery({
       queryKey: metricsKeys.list('month-canceled-orders-amount'),
-      queryFn: async () => api.get<MonthOrdersResponse>(endpoints.monthCanceledOrders).then((res) => res.data),
+      queryFn: async () => api.get<MonthCanceledOrdersResponse>(endpoints.monthCanceledOrders).then((res) => res.data),
     }),
   usePopularProductsQuery: () =>
     useQuery({

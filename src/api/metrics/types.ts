@@ -13,10 +13,10 @@ export interface MonthRevenueResponse {
   diffFromLastMonth: number
 }
 
-export type PopularProductsResponse = {
-  product: string
+export interface MonthCanceledOrdersResponse {
   amount: number
-}[]
+  diffFromLastMonth: number
+}
 
 export interface DayRevenueRequest {
   from?: Date
@@ -26,4 +26,9 @@ export interface DayRevenueRequest {
 export type DayRevenueResponse = {
   date: string
   receipt: number
+}[]
+
+export type PopularProductsResponse = {
+  product: string
+  amount: number
 }[]
