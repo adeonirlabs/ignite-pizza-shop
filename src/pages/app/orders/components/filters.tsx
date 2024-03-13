@@ -42,16 +42,12 @@ const items = [
 export const TableFilters = () => {
   const [params, setParams] = useSearchParams()
 
-  const orderId = params.get('order')
-  const customerName = params.get('name')
-  const status = params.get('status') as Status | null
-
   const { control, register, handleSubmit, reset } = useForm<FiltersSchema>({
     resolver: zodResolver(filtersSchema),
     defaultValues: {
-      order: orderId ?? '',
-      name: customerName ?? '',
-      status: status ?? 'all',
+      orderId: params.get('order') ?? '',
+      customerName: params.get('name') ?? '',
+      status: (params.get('status') as Status | null) ?? 'all',
     },
   })
 
@@ -60,25 +56,11 @@ export const TableFilters = () => {
     name: 'status',
   })
 
-  const handleFilters = handleSubmit((data) => {
+  const handleFilters = handleSubmit(({ orderId, customerName, status }) => {
     setParams((state) => {
-      if (data.order) {
-        state.set('order', data.order)
-      } else {
-        state.delete('order')
-      }
-
-      if (data.name) {
-        state.set('name', data.name)
-      } else {
-        state.delete('name')
-      }
-
-      if (data.status !== 'all') {
-        state.set('status', String(data.status))
-      } else {
-        state.delete('status')
-      }
+      orderId ? state.set('orderId', orderId) : state.delete('orderId')
+      customerName ? state.set('customerName', customerName) : state.delete('customerName')
+      status ? state.set('status', String(status)) : state.delete('status')
 
       state.set('page', '1')
 
@@ -89,8 +71,8 @@ export const TableFilters = () => {
   const handleClearFilters = () => {
     reset()
     setParams((state) => {
-      state.delete('order')
-      state.delete('name')
+      state.delete('orderId')
+      state.delete('customerName')
       state.delete('status')
       state.set('page', '1')
 
@@ -102,22 +84,22 @@ export const TableFilters = () => {
     <form className="flex items-center gap-2" onSubmit={handleFilters}>
       <Label className="text-sm font-semibold">Filtros:</Label>
       <Input
-        aria-label="order"
+        aria-label="orderId"
         className="h-8 w-64"
         placeholder="Pesquisar por id"
         type="text"
-        {...register('order')}
+        {...register('orderId')}
       />
       <Input
-        aria-label="name"
+        aria-label="customerName"
         className="h-8 w-64"
         placeholder="Pesquisar por cliente"
         type="text"
-        {...register('name')}
+        {...register('customerName')}
       />
-      <Select onValueChange={field.onChange} value={field.value}>
-        <Select.Trigger aria-label="status" className="h-8 w-40">
-          <Select.Value defaultValue="all" />
+      <Select aria-label="status" onValueChange={field.onChange} value={field.value}>
+        <Select.Trigger aria-label="select order status" className="h-8 w-40">
+          <Select.Value aria-label={field.value} defaultValue="all" />
         </Select.Trigger>
         <Select.Content>
           {items.map(({ label, value }) => (

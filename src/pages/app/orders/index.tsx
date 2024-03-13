@@ -15,9 +15,9 @@ import { TableSkeleton } from './components/table-skeleton'
 export const Orders = () => {
   const [params, setParams] = useSearchParams()
 
-  const orderId = params.get('order')
-  const customerName = params.get('name')
-  const status = params.get('status') as Status | null
+  const orderId = params.get('orderId') ?? ''
+  const customerName = params.get('customerName') ?? ''
+  const status = (params.get('status') as Status | null) ?? 'all'
 
   const pageIndex = z.coerce
     .number()
