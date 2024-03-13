@@ -4,7 +4,7 @@ import { api } from '~/lib/axios'
 
 import type { SignInRequest } from './types'
 
-const endpoints = {
+export const endpoints = {
   signIn: '/authenticate',
 }
 
