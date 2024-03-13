@@ -15,5 +15,5 @@ export const signIn = http.post<never, SignInRequest>(endpoints.signIn, async ({
     })
   }
 
-  return HttpResponse.json(null, { status: 401 })
+  return new HttpResponse(null, { status: 401 })
 })

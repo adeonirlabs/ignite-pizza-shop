@@ -7,8 +7,8 @@ export const signUp = http.post<never, SignUpRequest>(endpoints.signUp, async ({
   const { restaurantName } = await request.json()
 
   if (restaurantName === 'Pizza Shop') {
-    return HttpResponse.json(null, { status: 201 })
+    return new HttpResponse(null, { status: 201 })
   }
 
-  return HttpResponse.json(null, { status: 400 })
+  return new HttpResponse(null, { status: 400 })
 })
