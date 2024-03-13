@@ -5,7 +5,7 @@ import { queryClient } from '~/lib/react-query'
 
 import type { RestaurantRequest, RestaurantResponse } from './types'
 
-const endpoints = {
+export const endpoints = {
   restaurant: '/managed-restaurant',
   profile: '/profile',
 }
