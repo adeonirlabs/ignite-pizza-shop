@@ -1,8 +1,8 @@
 import { http, HttpResponse } from 'msw'
 
-import type { SignInSchema } from '~/schemas/sign-in'
+import type { SignInRequest } from './types'
 
-export const signIn = http.post<never, SignInSchema>('/authenticate', async ({ request }) => {
+export const signIn = http.post<never, SignInRequest>('/authenticate', async ({ request }) => {
   const { email } = await request.json()
 
   if (email === 'john.doe@example.com') {
