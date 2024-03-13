@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
+import { startMsw } from '~/api/mocks/msw.ts'
+
 import { App } from './app.tsx'
-import { startMsw } from './lib/msw.ts'
 
 startMsw().then(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
