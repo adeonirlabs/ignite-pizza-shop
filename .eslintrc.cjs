@@ -48,6 +48,7 @@ module.exports = {
     "postcss.config.cjs",
     "vite.config.ts",
     "vitest.config.ts",
+    "mockServiceWorker.js",
   ],
   plugins: [
     "react",
