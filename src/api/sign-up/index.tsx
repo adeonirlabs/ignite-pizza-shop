@@ -4,7 +4,7 @@ import { api } from '~/lib/axios'
 
 import type { SignUpRequest } from './types'
 
-const endpoints = {
+export const endpoints = {
   signUp: '/restaurants',
 }
 

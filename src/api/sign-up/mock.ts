@@ -1,13 +1,14 @@
 import { http, HttpResponse } from 'msw'
 
+import { endpoints } from '.'
 import type { SignUpRequest } from './types'
 
-export const signUp = http.post<never, SignUpRequest>('/restaurants', async ({ request }) => {
+export const signUp = http.post<never, SignUpRequest>(endpoints.signUp, async ({ request }) => {
   const { restaurantName } = await request.json()
 
   if (restaurantName === 'Pizza Shop') {
-    return new HttpResponse(null, { status: 200 })
+    return HttpResponse.json(null, { status: 200 })
   }
 
-  return new HttpResponse(null, { status: 400 })
+  return HttpResponse.json(null, { status: 400 })
 })
