@@ -4,6 +4,7 @@ import { env } from '~/env'
 
 import { me } from '../me/mock'
 import { dayOrders, dayRevenue, monthCanceledOrders, monthOrders, monthRevenue, popularProducts } from '../metrics/mock'
+import { orders } from '../orders/mock'
 import { profile, restaurant } from '../restaurant/mock'
 import { signIn } from '../sign-in/mock'
 import { signUp } from '../sign-up/mock'
@@ -15,6 +16,7 @@ export const worker = setupWorker(
   monthCanceledOrders,
   monthOrders,
   monthRevenue,
+  orders,
   popularProducts,
   profile,
   restaurant,
