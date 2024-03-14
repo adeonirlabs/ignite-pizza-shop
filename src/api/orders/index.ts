@@ -12,6 +12,7 @@ import type {
   OrderDispatchRequest,
   OrdersRequest,
   OrdersResponse,
+  Status,
 } from './types'
 
 export const endpoints = {
@@ -29,6 +30,19 @@ const ordersKeys = {
   list: (filters: string | string[]) => [...ordersKeys.lists(), { filters }] as const,
   details: () => [...ordersKeys.all, 'detail'] as const,
   detail: (id: string) => [...ordersKeys.details(), id] as const,
+}
+
+const updateStatusOnCache = (id: string, status: Status) => {
+  const ordersListCache = queryClient.getQueriesData<OrdersResponse>({ queryKey: ordersKeys.all })
+
+  ordersListCache.forEach(([cacheKey, cacheData]) => {
+    if (!cacheData) return
+
+    queryClient.setQueryData<OrdersResponse>(cacheKey, {
+      ...cacheData,
+      orders: cacheData.orders.map((order) => (order.orderId === id ? { ...order, status } : order)),
+    })
+  })
 }
 
 const ordersQueries = {
@@ -50,25 +64,33 @@ const ordersQueries = {
   useOrderApproveMutation: () => {
     return useMutation({
       mutationFn: async ({ id }: OrderApproveRequest) => api.patch(endpoints.approve(id)),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ordersKeys.all }),
+      onSuccess: (_, { id }) => {
+        updateStatusOnCache(id, 'processing')
+      },
     })
   },
   useOrderCancelMutation: () => {
     return useMutation({
       mutationFn: async ({ id }: OrderCancelRequest) => api.patch(endpoints.cancel(id)),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ordersKeys.all }),
-    })
-  },
-  useOrderDeliverMutation: () => {
-    return useMutation({
-      mutationFn: async ({ id }: OrderDeliverRequest) => api.patch(endpoints.deliver(id)),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ordersKeys.all }),
+      onSuccess: (_, { id }) => {
+        updateStatusOnCache(id, 'canceled')
+      },
     })
   },
   useOrderDispatchMutation: () => {
     return useMutation({
       mutationFn: async ({ id }: OrderDispatchRequest) => api.patch(endpoints.dispatch(id)),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ordersKeys.all }),
+      onSuccess: (_, { id }) => {
+        updateStatusOnCache(id, 'delivering')
+      },
+    })
+  },
+  useOrderDeliverMutation: () => {
+    return useMutation({
+      mutationFn: async ({ id }: OrderDeliverRequest) => api.patch(endpoints.deliver(id)),
+      onSuccess: (_, { id }) => {
+        updateStatusOnCache(id, 'delivered')
+      },
     })
   },
 }
