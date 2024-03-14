@@ -3,13 +3,22 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { api } from '~/lib/axios'
 import { queryClient } from '~/lib/react-query'
 
-import type { OrderDetailsRequest, OrderDetailsResponse, OrdersRequest, OrdersResponse } from './types'
+import type {
+  OrderApproveRequest,
+  OrderCancelRequest,
+  OrderDeliverRequest,
+  OrderDetailsRequest,
+  OrderDetailsResponse,
+  OrderDispatchRequest,
+  OrdersRequest,
+  OrdersResponse,
+} from './types'
 
 export const endpoints = {
   orders: '/orders',
   details: (id: string) => `/orders/${id}`,
-  cancel: (id: string) => `/orders/${id}/cancel`,
   approve: (id: string) => `/orders/${id}/approve`,
+  cancel: (id: string) => `/orders/${id}/cancel`,
   deliver: (id: string) => `/orders/${id}/deliver`,
   dispatch: (id: string) => `/orders/${id}/dispatch`,
 }
@@ -38,27 +47,27 @@ const ordersQueries = {
       queryKey: ordersKeys.detail(id),
       queryFn: async () => api.get<OrderDetailsResponse>(endpoints.details(id)).then((res) => res.data),
     }),
-  useOrderCancelMutation: () => {
-    return useMutation({
-      mutationFn: async ({ id }: OrderDetailsRequest) => api.patch(endpoints.cancel(id)),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ordersKeys.all }),
-    })
-  },
   useOrderApproveMutation: () => {
     return useMutation({
-      mutationFn: async ({ id }: OrderDetailsRequest) => api.patch(endpoints.approve(id)),
+      mutationFn: async ({ id }: OrderApproveRequest) => api.patch(endpoints.approve(id)),
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ordersKeys.all }),
     })
   },
-  useOrderDispatchMutation: () => {
+  useOrderCancelMutation: () => {
     return useMutation({
-      mutationFn: async ({ id }: OrderDetailsRequest) => api.patch(endpoints.dispatch(id)),
+      mutationFn: async ({ id }: OrderCancelRequest) => api.patch(endpoints.cancel(id)),
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ordersKeys.all }),
     })
   },
   useOrderDeliverMutation: () => {
     return useMutation({
-      mutationFn: async ({ id }: OrderDetailsRequest) => api.patch(endpoints.deliver(id)),
+      mutationFn: async ({ id }: OrderDeliverRequest) => api.patch(endpoints.deliver(id)),
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: ordersKeys.all }),
+    })
+  },
+  useOrderDispatchMutation: () => {
+    return useMutation({
+      mutationFn: async ({ id }: OrderDispatchRequest) => api.patch(endpoints.dispatch(id)),
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ordersKeys.all }),
     })
   },
@@ -67,8 +76,8 @@ const ordersQueries = {
 export const {
   useOrdersQuery,
   useOrderDetailsQuery,
-  useOrderCancelMutation,
   useOrderApproveMutation,
-  useOrderDispatchMutation,
+  useOrderCancelMutation,
   useOrderDeliverMutation,
+  useOrderDispatchMutation,
 } = ordersQueries

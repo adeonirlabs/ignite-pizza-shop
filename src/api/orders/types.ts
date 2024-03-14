@@ -57,3 +57,11 @@ export interface OrderDetailsRequest {
 }
 
 export type OrderDetailsResponse = OrderDetails
+
+export type OrderApproveRequest = OrderDetailsRequest
+
+export type OrderCancelRequest = OrderDetailsRequest
+
+export type OrderDeliverRequest = OrderDetailsRequest
+
+export type OrderDispatchRequest = OrderDetailsRequest
