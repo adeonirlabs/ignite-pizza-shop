@@ -1,7 +1,17 @@
 import { http, HttpResponse } from 'msw'
 
 import { endpoints } from '.'
-import type { Order, OrderDetailsRequest, OrderDetailsResponse, OrdersResponse, Status } from './types'
+import type {
+  Order,
+  OrderApproveRequest,
+  OrderCancelRequest,
+  OrderDeliverRequest,
+  OrderDetailsRequest,
+  OrderDetailsResponse,
+  OrderDispatchRequest,
+  OrdersResponse,
+  Status,
+} from './types'
 
 const statusArray: Status[] = ['pending', 'canceled', 'processing', 'delivering', 'delivered']
 
@@ -74,3 +84,35 @@ export const orderDetails = http.get<OrderDetailsRequest, never, OrderDetailsRes
     })
   },
 )
+
+export const orderApprove = http.patch<OrderApproveRequest, never, never>(endpoints.approve(':id'), ({ params }) => {
+  if (params.id === 'error-order-id') {
+    return new HttpResponse(null, { status: 400 })
+  }
+
+  return new HttpResponse(null, { status: 204 })
+})
+
+export const orderCancel = http.patch<OrderCancelRequest, never, never>(endpoints.cancel(':id'), ({ params }) => {
+  if (params.id === 'error-order-id') {
+    return new HttpResponse(null, { status: 400 })
+  }
+
+  return new HttpResponse(null, { status: 204 })
+})
+
+export const orderDispatch = http.patch<OrderDispatchRequest, never, never>(endpoints.dispatch(':id'), ({ params }) => {
+  if (params.id === 'error-order-id') {
+    return new HttpResponse(null, { status: 400 })
+  }
+
+  return new HttpResponse(null, { status: 204 })
+})
+
+export const orderDeliver = http.patch<OrderDeliverRequest, never, never>(endpoints.deliver(':id'), ({ params }) => {
+  if (params.id === 'error-order-id') {
+    return new HttpResponse(null, { status: 400 })
+  }
+
+  return new HttpResponse(null, { status: 204 })
+})
