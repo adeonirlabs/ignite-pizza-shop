@@ -53,16 +53,16 @@ export const SignUp = () => {
         </header>
         <form className="space-y-4" onSubmit={handleSignUp}>
           <div className="space-y-2">
-            <Label htmlFor="text">Estabelecimento</Label>
-            <Input id="text" placeholder="Nome do estabelecimento" type="text" {...register('company')} />
+            <Label htmlFor="company">Estabelecimento</Label>
+            <Input id="company" placeholder="Nome do estabelecimento" type="text" {...register('company')} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="text">Gerente</Label>
-            <Input id="text" placeholder="Nome do gerente" type="text" {...register('manager')} />
+            <Label htmlFor="manager">Gerente</Label>
+            <Input id="manager" placeholder="Nome do gerente" type="text" {...register('manager')} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="text">E-mail</Label>
-            <Input id="text" placeholder="Seu telefone" type="text" {...register('email')} />
+            <Label htmlFor="email">E-mail</Label>
+            <Input id="email" placeholder="Seu e-mail" type="email" {...register('email')} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">Telefone</Label>
