@@ -13,7 +13,7 @@ const ordersArray: Order[] = Array.from({ length: 60 }, (_, index) => ({
   createdAt: new Date().toISOString(),
 }))
 
-export const orders = http.get<never, never, OrdersResponse>(endpoints.orders, ({ request }) => {
+export const ordersList = http.get<never, never, OrdersResponse>(endpoints.orders, ({ request }) => {
   const { searchParams } = new URL(request.url)
 
   const pageIndex = Number(searchParams.get('pageIndex')) || 0
@@ -40,7 +40,7 @@ export const orders = http.get<never, never, OrdersResponse>(endpoints.orders, (
   })
 })
 
-export const details = http.get<OrderDetailsRequest, never, OrderDetailsResponse>(
+export const orderDetails = http.get<OrderDetailsRequest, never, OrderDetailsResponse>(
   endpoints.details(':id'),
   ({ params }) => {
     return HttpResponse.json({

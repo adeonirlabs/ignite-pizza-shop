@@ -2,27 +2,27 @@ import { setupWorker } from 'msw/browser'
 
 import { env } from '~/env'
 
-import { me } from '../me/mock'
+import { userProfile } from '../me/mock'
 import { dayOrders, dayRevenue, monthCanceledOrders, monthOrders, monthRevenue, popularProducts } from '../metrics/mock'
-import { details, orders } from '../orders/mock'
-import { profile, restaurant } from '../restaurant/mock'
+import { orderDetails, ordersList } from '../orders/mock'
+import { restaurant, restaurantProfile } from '../restaurant/mock'
 import { signIn } from '../sign-in/mock'
 import { signUp } from '../sign-up/mock'
 
 export const worker = setupWorker(
   dayOrders,
   dayRevenue,
-  details,
-  me,
   monthCanceledOrders,
   monthOrders,
   monthRevenue,
-  orders,
+  orderDetails,
+  ordersList,
   popularProducts,
-  profile,
   restaurant,
+  restaurantProfile,
   signIn,
   signUp,
+  userProfile,
 )
 
 export async function startMsw() {
