@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import { http, HttpResponse } from 'msw'
 
 import { endpoints } from '.'
@@ -7,9 +6,9 @@ import type { Order, OrdersResponse, Status } from './types'
 const statusArray: Status[] = ['pending', 'canceled', 'processing', 'delivering', 'delivered']
 
 const ordersArray: Order[] = Array.from({ length: 60 }, (_, index) => ({
-  orderId: `${faker.string.uuid()}${index + 1}`,
+  orderId: `order-${index + 1}`,
   status: statusArray[Math.floor(Math.random() * statusArray.length)],
-  customerName: faker.person.fullName(),
+  customerName: `Customer ${index + 1}`,
   total: Math.floor(Math.random() * 1000),
   createdAt: new Date().toISOString(),
 }))
