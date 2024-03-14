@@ -5,7 +5,7 @@ import { queryClient } from '~/lib/react-query'
 
 import type { OrderDetailsRequest, OrderDetailsResponse, OrdersRequest, OrdersResponse } from './types'
 
-const endpoints = {
+export const endpoints = {
   orders: '/orders',
   details: (id: string) => `/orders/${id}`,
   cancel: (id: string) => `/orders/${id}/cancel`,
@@ -25,7 +25,7 @@ const ordersKeys = {
 const ordersQueries = {
   useOrdersQuery: ({ pageIndex, orderId, customerName, status }: OrdersRequest) =>
     useQuery({
-      queryKey: ordersKeys.list([String(pageIndex), orderId || '', customerName || '', status || 'all']),
+      queryKey: ordersKeys.list([String(pageIndex ?? 0), orderId ?? '', customerName ?? '', status ?? 'all']),
       queryFn: async () =>
         api
           .get<OrdersResponse>(endpoints.orders, {
