@@ -49,19 +49,19 @@ export const ProfileDialog = () => {
       <Dialog.Body>
         <form className="gap-4 space-y-4" id="profile" onSubmit={handleProfile}>
           <div className="grid grid-cols-4 gap-4">
-            <Label className="mt-2 text-right" htmlFor="name">
+            <Label className="mt-3 text-right" htmlFor="name">
               Nome
             </Label>
             <div className="col-span-3">
-              <Input {...register('name')} />
+              <Input id="name" {...register('name')} />
               {errors.name ? <ErrorMessage>{errors.name.message}</ErrorMessage> : null}
             </div>
           </div>
           <div className="grid grid-cols-4 gap-4">
-            <Label className="mt-2 text-right" htmlFor="description">
+            <Label className="mt-3 text-right" htmlFor="description">
               Descrição
             </Label>
-            <Textarea className="col-span-3" rows={5} {...register('description')} />
+            <Textarea className="col-span-3" id="description" rows={5} {...register('description')} />
           </div>
         </form>
       </Dialog.Body>
