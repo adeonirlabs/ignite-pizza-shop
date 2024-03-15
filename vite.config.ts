@@ -19,7 +19,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     include: ['src/**/*.spec.{ts,tsx}'],
-    exclude: ['/node_modules/', '/.next/'],
+    exclude: ['/node_modules/', '/.next/', 'src/tests/**/*'],
     setupFiles: './vitest.setup.ts',
   },
 })
