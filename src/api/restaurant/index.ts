@@ -19,15 +19,13 @@ const restaurantKeys = {
 }
 
 const updateProfileOnCache = ({ name, description }: RestaurantRequest) => {
-  const profileCached = queryClient.getQueryData<RestaurantResponse>([restaurantKeys.all])
-
-  if (profileCached) {
-    queryClient.setQueryData<RestaurantResponse>([restaurantKeys.all], {
-      ...profileCached,
+  queryClient.setQueryData<Partial<RestaurantResponse>>(restaurantKeys.all, (oldData) => {
+    return {
+      ...oldData,
       name,
       description,
-    })
-  }
+    }
+  })
 }
 
 const restaurantQueries = {
@@ -43,7 +41,6 @@ const restaurantQueries = {
       onMutate: (data) => {
         updateProfileOnCache({ ...data })
       },
-      onSettled: () => queryClient.invalidateQueries({ queryKey: restaurantKeys.all }),
     }),
 }
 
