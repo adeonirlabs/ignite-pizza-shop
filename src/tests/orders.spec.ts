@@ -28,7 +28,7 @@ test('display paginated orders', async ({ page }) => {
 test('filter by order id', async ({ page }) => {
   await page.goto('/orders')
 
-  expect(page.getByRole('cell', { name: 'order-11' })).not.toBeVisible()
+  await expect(page.getByRole('cell', { name: 'order-11' })).toBeHidden()
 
   await page.getByPlaceholder('Pesquisar por id').fill('order-11')
   await page.getByLabel('Pesquisar resultados').click()
@@ -39,7 +39,7 @@ test('filter by order id', async ({ page }) => {
 test('filter by customer name', async ({ page }) => {
   await page.goto('/orders')
 
-  expect(page.getByRole('cell', { name: 'Customer 11' })).not.toBeVisible()
+  await expect(page.getByRole('cell', { name: 'Customer 11' })).toBeHidden()
 
   await page.getByPlaceholder('Pesquisar por cliente').fill('Customer 11')
   await page.getByLabel('Pesquisar resultados').click()
