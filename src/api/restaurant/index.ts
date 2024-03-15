@@ -18,6 +18,18 @@ const restaurantKeys = {
   detail: (id: number) => [...restaurantKeys.details(), id] as const,
 }
 
+const updateProfileOnCache = ({ name, description }: RestaurantRequest) => {
+  const profileCached = queryClient.getQueryData<RestaurantResponse>([restaurantKeys.all])
+
+  if (profileCached) {
+    queryClient.setQueryData<RestaurantResponse>([restaurantKeys.all], {
+      ...profileCached,
+      name,
+      description,
+    })
+  }
+}
+
 const restaurantQueries = {
   useRestaurantQuery: () =>
     useQuery({
@@ -28,18 +40,8 @@ const restaurantQueries = {
   useRestaurantMutation: () =>
     useMutation({
       mutationFn: async (data: RestaurantRequest) => api.put<RestaurantRequest>(endpoints.profile, data),
-      onMutate: async (data) => {
-        await queryClient.cancelQueries({ queryKey: restaurantKeys.all })
-        const previousData = queryClient.getQueryData<RestaurantRequest>(restaurantKeys.all)
-
-        queryClient.setQueryData<RestaurantRequest>(restaurantKeys.all, { ...previousData, ...data })
-
-        return { previousData }
-      },
-      onError: (_, __, context) => {
-        if (context?.previousData) {
-          queryClient.setQueryData<RestaurantRequest>(restaurantKeys.all, context.previousData)
-        }
+      onMutate: (data) => {
+        updateProfileOnCache({ ...data })
       },
       onSettled: () => queryClient.invalidateQueries({ queryKey: restaurantKeys.all }),
     }),

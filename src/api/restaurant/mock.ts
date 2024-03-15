@@ -17,7 +17,7 @@ export const restaurant = http.get<never, never, RestaurantResponse>(endpoints.r
 export const restaurantProfile = http.put<never, RestaurantRequest>(endpoints.profile, async ({ request }) => {
   const { name } = await request.json()
 
-  if (name === 'Pizza Shop') {
+  if (name === 'Rocket Pizza') {
     return new HttpResponse(null, { status: 204 })
   }
 
