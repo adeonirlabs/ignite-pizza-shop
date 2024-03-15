@@ -17,7 +17,7 @@ const statusArray: Status[] = ['pending', 'canceled', 'processing', 'delivering'
 
 const ordersArray: Order[] = Array.from({ length: 60 }, (_, index) => ({
   orderId: `order-${index + 1}`,
-  status: statusArray[Math.floor(Math.random() * statusArray.length)],
+  status: statusArray[index % 5],
   customerName: `Customer ${index + 1}`,
   total: Math.floor(Math.random() * 1000),
   createdAt: new Date().toISOString(),
