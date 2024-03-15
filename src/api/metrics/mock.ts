@@ -19,7 +19,7 @@ export const dayOrders = http.get<never, never, DayOrdersResponse>(endpoints.day
 
 export const monthOrders = http.get<never, never, MonthOrdersResponse>(endpoints.monthOrders, () => {
   return HttpResponse.json({
-    amount: 50,
+    amount: 35,
     diffFromLastMonth: 3,
   })
 })
@@ -36,7 +36,7 @@ export const monthCanceledOrders = http.get<never, never, MonthCanceledOrdersRes
   () => {
     return HttpResponse.json({
       amount: 30,
-      diffFromLastMonth: -3,
+      diffFromLastMonth: -4,
     })
   },
 )
