@@ -1,30 +1,48 @@
-# React + TypeScript + Vite
+> Ignite - Projeto #7
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Ignite Pizza Shop
 
-Currently, two official plugins are available:
+<img src=".github/ignite-pizza-shop.jpg" />
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Sobre o projeto
 
-## Expanding the ESLint configuration
+O projeto Ignite Pizza Shop é uma aplicação para gerenciamento de pizzaria (dashboard de administrador), focando em:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Conceitos do React
+- Comunicação com APIs via requisições HTTP
+- Testes unitários e end-to-end
 
-- Configure the top-level `parserOptions` property like this:
+As Funcionalidades incluem:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Cadastro de estabelecimento, persistindo no banco de dados
+- Login utilizando magic link (passwordless)
+- Dashboard com métricas de vendas por dia e por mês, além de gráficos com vendas diárias e produtos mais populares
+- Listagem de pedidos, com filtros por id, nome do cliente e status do pedido
+- Ações do pedido, mudando o estado atual (pendente, cancelado, em processo, em entrega ou entregue)
+- Detalhes do pedido, incluindo listagem de produtos
+- Tema claro e escuro
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Tecnologias Utilizadas
+
+> Este projeto não segue a mesma organização do curso, mas sim a estrutura que eu utilizo em projetos da empresa e/ou projetos freelances
+
+- Frontend:
+  - React
+  - TypeScript
+  - Vite
+  - React Router Dom
+  - React Query
+  - Next-Auth
+- Styling:
+  - Tailwind CSS
+  - Shadcn UI
+- Form Management:
+  - React Hook Form
+- Validation:
+  - Zod
+- Linting and Formatting:
+  - Eslint
+  - Prettier
+- Testing:
+  - Vitest
+  - Playwright
