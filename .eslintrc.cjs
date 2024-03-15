@@ -19,6 +19,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:prettier/recommended",
     'plugin:react-hooks/recommended',
+    'plugin:playwright/recommended',
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
